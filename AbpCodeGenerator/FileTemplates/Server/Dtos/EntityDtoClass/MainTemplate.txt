@@ -1,0 +1,12 @@
+﻿{{Enum_Using_Looped_Template_Here}}
+using System;
+using Abp.Application.Services.Dto;
+
+namespace {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}.Dtos
+{
+    public class {{Entity_Name_Here}}Dto : EntityDto{{Primary_Key_Inside_Tag_Here}}
+    {
+{{Property_Looped_Template_Here}}
+{{NP_Looped_Declaration_Here}}
+    }
+}

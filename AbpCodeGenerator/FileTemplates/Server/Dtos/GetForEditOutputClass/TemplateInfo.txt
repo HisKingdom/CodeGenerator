@@ -1,0 +1,4 @@
+{
+	"path" : "{{Namespace_Here}}.Application.Shared\\{{Namespace_Relative_Full_Reverse_Slash_Here}}\\Dtos\\Get{{Entity_Name_Here}}ForEditOutput.cs",
+	"condition": ""
+}

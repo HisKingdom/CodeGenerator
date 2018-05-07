@@ -1,0 +1,107 @@
+{
+"navigationPropertyTemplates":[
+		{
+			"placeholder" : "{{NP_Looped_Display_Declaration_Here}}",
+			"templates" : [
+					{
+					"relation" : "single",
+					"content" : "{{nP_Foreign_Entity_Name_Here}}{{NP_Display_Property_Name_Here}}{{NP_Duplication_Number_Here}} = '';
+		 "
+					}
+				]
+		},
+		{
+			"placeholder" : "{{NP_Looped_Display_Init_Here}}",
+			"templates" : [
+					{
+					"relation" : "single",
+					"content" : "this.{{nP_Foreign_Entity_Name_Here}}{{NP_Display_Property_Name_Here}}{{NP_Duplication_Number_Here}} = '';
+		 "
+					}
+				]
+		},
+		{
+			"placeholder" : "{{NP_Looped_Edit_Bind_Here}}",
+			"templates" : [
+					{
+					"relation" : "single",
+					"content" : "this.{{nP_Foreign_Entity_Name_Here}}{{NP_Display_Property_Name_Here}}{{NP_Duplication_Number_Here}} = result.{{nP_Foreign_Entity_Name_Here}}{{NP_Display_Property_Name_Here}}{{NP_Duplication_Number_Here}};
+		 "
+					}
+				]
+		},
+		{
+			"placeholder" : "{{NP_Looped_Lookup_Component_Import_Here}}",
+			"templates" : [
+					{
+					"relation" : "single",
+					"preventDuplicate":true,
+					"content" : "import { {{NP_Foreign_Entity_Name_Here}}LookupTableModalComponent } from './{{nP_Foreign_Entity_Name_Here}}-lookup-table-modal.component';
+"
+					}
+				]
+		},
+		{
+			"placeholder" : "{{NP_Looped_ViewChild_Here}}",
+			"templates" : [
+					{
+					"relation" : "single",
+					"content" : " @ViewChild('{{nP_Foreign_Entity_Name_Here}}LookupTableModal{{NP_Duplication_Number_Here}}') {{nP_Foreign_Entity_Name_Here}}LookupTableModal{{NP_Duplication_Number_Here}}: {{NP_Foreign_Entity_Name_Here}}LookupTableModalComponent;
+	"
+					}
+				]
+		},
+		{
+			"placeholder" : "{{NP_Looped_OpenModal_Here}}",
+			"templates" : [
+					{
+					"relation" : "single",
+					"content" : "    openSelect{{NP_Foreign_Entity_Name_Here}}Modal{{NP_Duplication_Number_Here}}() {
+        this.{{nP_Foreign_Entity_Name_Here}}LookupTableModal{{NP_Duplication_Number_Here}}.id = this.{{entity_Name_Here}}.{{nP_Name_Here}};
+        this.{{nP_Foreign_Entity_Name_Here}}LookupTableModal{{NP_Duplication_Number_Here}}.displayName = this.{{nP_Foreign_Entity_Name_Here}}{{NP_Display_Property_Name_Here}};
+        this.{{nP_Foreign_Entity_Name_Here}}LookupTableModal{{NP_Duplication_Number_Here}}.show();
+    }
+	"
+					}
+				]
+		},
+		{
+			"placeholder" : "{{NP_Looped_SetNull_Here}}",
+			"templates" : [
+					{
+					"relation" : "single",
+					"content" : "    set{{NP_Name_Here}}Null() {
+        this.{{entity_Name_Here}}.{{nP_Name_Here}} = null;
+        this.{{nP_Foreign_Entity_Name_Here}}{{NP_Display_Property_Name_Here}}{{NP_Duplication_Number_Here}} = '';
+    }
+	"
+					}
+				]
+		},
+		{
+			"placeholder" : "{{NP_Looped_GetNew_Here}}",
+			"templates" : [
+					{
+					"relation" : "single",
+					"content" : "    getNew{{NP_Name_Here}}() {
+        this.{{entity_Name_Here}}.{{nP_Name_Here}} = this.{{nP_Foreign_Entity_Name_Here}}LookupTableModal.id;
+        this.{{nP_Foreign_Entity_Name_Here}}{{NP_Display_Property_Name_Here}}{{NP_Duplication_Number_Here}} = this.{{nP_Foreign_Entity_Name_Here}}LookupTableModal.displayName;
+    }
+	"
+					}
+				]
+		}
+	],
+"conditionalTemplates":[
+		{
+			"placeholder": "{{Primary_Key_Type_Here}}",
+			"condition": "{{Primary_Key_Here}} == 'Guid'",
+			"content": "string"
+		},
+		{
+			"placeholder": "{{Primary_Key_Type_Here}}",
+			"condition": "{{Primary_Key_Here}} != 'Guid'",
+			"content": "number"
+		}
+	]
+}

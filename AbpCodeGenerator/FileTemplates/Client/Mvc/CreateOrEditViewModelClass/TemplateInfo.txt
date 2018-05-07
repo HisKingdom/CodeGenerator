@@ -1,0 +1,4 @@
+{
+	"path" : "{{Namespace_Here}}.Web.Mvc\\Areas\\{{App_Area_Name_Here}}\\Models\\{{Entity_Name_Plural_Here}}\\CreateOrEdit{{Entity_Name_Here}}ViewModel.cs",
+	"condition": ""
+}

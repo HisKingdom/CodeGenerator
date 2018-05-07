@@ -1,0 +1,4 @@
+{
+	"path" : "{{Namespace_Here}}.Application.Shared\\{{Namespace_Relative_Full_Reverse_Slash_Here}}\\Dtos\\GetAll{{Entity_Name_Plural_Here}}Input.cs",
+	"condition": ""
+}

@@ -1,0 +1,14 @@
+{
+"navigationPropertyTemplates":[
+		{
+			"placeholder" : "{{NP_Looped_Display_Property_Here}}",
+			"templates" : [
+					{
+					"relation" : "single",
+					"content" : "		public string {{NP_Foreign_Entity_Name_Here}}{{NP_Display_Property_Name_Here}}{{NP_Duplication_Number_Here}} { get; set;}
+"
+					}
+				]
+		}
+	]
+}

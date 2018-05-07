@@ -1,0 +1,9 @@
+﻿using Abp.Application.Services.Dto;
+
+namespace {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}.Dtos
+{
+    public class GetAll{{Entity_Name_Plural_Here}}Input : PagedAndSortedResultRequestDto
+    {
+		public string Filter { get; set; }
+    }
+}

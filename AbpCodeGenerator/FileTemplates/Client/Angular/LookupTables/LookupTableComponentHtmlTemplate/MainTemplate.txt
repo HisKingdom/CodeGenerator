@@ -1,0 +1,86 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{l("Pick{{NP_Foreign_Entity_Name_Here}}")}}</span>
+                </h4>
+                <button type="button" class="close" (click)="close()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+                    <div class="m-portlet m-portlet--mobile">
+                        <div class="m-portlet__body">
+                            <form class="horizontal-form" autocomplete="off">
+                                <div class="m-form m-form--label-align-right">
+                                    <div class="row align-items-center m--margin-bottom-10">
+                                        <div class="col-xl-12">
+                                            <div class="form-group m-form__group align-items-center">
+                                                <div class="input-group">
+                                                    <input [(ngModel)]="filterText" name="filterText" autoFocus class="form-control m-input" [placeholder]="l('SearchWithThreeDot')" type="text">
+                                                    <span class="input-group-btn">
+                                                        <button (click)="getAll()" class="btn btn-primary" type="submit"><i class="flaticon-search-1"></i></button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <div class="row align-items-center">
+                                <div class="primeng-datatable-container"
+                                     [busyIf]="primengDatatableHelper.isLoading">
+                                    <p-dataTable #dataTable
+                                                 (onLazyLoad)="getAll($event)"
+                                                 [value]="primengDatatableHelper.records"
+                                                 rows ="5"
+                                                 [paginator]="false"
+                                                 [lazy]="true"
+                                                 emptyMessage="{{l('NoData')}}"
+                                                 scrollable="true"
+                                                 ScrollWidth="100%"
+                                                 responsive="primengDatatableHelper.isResponsive"
+                                                 resizableColumns="primengDatatableHelper.resizableColumns">
+
+                                        <p-column field=""
+                                                  header="{{l('Actions')}}"
+                                                  [sortable]="false"
+                                                  [style]="{'width':'130px','text-align':'center'}">
+                                            <ng-template let-record="rowData" pTemplate="body">
+                                                <div class="btn-group dropdown" normalizePosition>
+                                                    <button class="btn btn-sm btn-primary" type="button" (click)="setAndSave(record)">
+                                                        {{l("Select")}}
+                                                    </button>
+                                                </div>
+                                            </ng-template>
+                                        </p-column>
+
+                                        <p-column field="displayName" header="{{ l('{{NP_Display_Property_Name_Here}}')}}" [sortable]="true"></p-column>
+
+                                    </p-dataTable>
+
+
+                                    <div class="primeng-paging-container">
+                                        <p-paginator rows="{{primengDatatableHelper.defaultRecordsCountPerPage}}"
+                                                     #paginator
+                                                     styleClass="{{nP_Foreign_Entity_Name_Here}}-lookup-table-paginator"
+                                                     (onPageChange)="getAll($event)"
+                                                     [totalRecords]="primengDatatableHelper.totalRecordsCount"
+                                                     [rowsPerPageOptions]="primengDatatableHelper.predefinedRecordsCountPerPage">
+                                        </p-paginator>
+                                        <span class="total-records-count">
+                                            {{l('TotalRecordsCount', primengDatatableHelper.totalRecordsCount)}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            </div>
+
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-primary blue" (click)="close()">{{l("Close")}}</button>
+            </div>
+        </div>
+    </div>
+</div>

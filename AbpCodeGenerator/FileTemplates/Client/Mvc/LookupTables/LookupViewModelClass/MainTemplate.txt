@@ -1,0 +1,11 @@
+﻿namespace {{Namespace_Here}}.Web.Areas.{{App_Area_Name_Here}}.Models.{{Entity_Name_Plural_Here}}
+{
+    public class {{NP_Foreign_Entity_Name_Here}}LookupTableViewModel
+    {
+        public {{NP_Id_Type_NoGuid_Nullable_Here}} Id { get; set; }
+
+        public string DisplayName { get; set; }
+
+        public string FilterText { get; set; }
+    }
+}

@@ -1,0 +1,45 @@
+{
+"navigationPropertyTemplates":[
+		{
+			"placeholder" : "{{NP_Looped_Display_Property_Init_Here}}",
+			"templates" : [
+					{
+					"relation" : "single",
+					"content" : ",
+					{{NP_Foreign_Entity_Name_Here}}{{NP_Display_Property_Name_Here}}{{NP_Duplication_Number_Here}} = get{{Entity_Name_Here}}ForEditOutput.{{NP_Foreign_Entity_Name_Here}}{{NP_Display_Property_Name_Here}}{{NP_Duplication_Number_Here}}"
+					}
+				]
+		},
+		{
+			"placeholder" : "{{NP_Looped_Controller_Here}}",
+			"templates" : [
+					{
+					"relation" : "single",
+					"preventDuplicate" : true,
+					"content" : "        [AbpMvcAuthorize(AppPermissions.{{Permission_Name_Here}}_Create, AppPermissions.{{Permission_Name_Here}}_Edit)]
+        public PartialViewResult {{NP_Foreign_Entity_Name_Here}}LookupTableModal({{NP_Id_Type_Here}}? id, string displayName)
+        {
+            var viewModel = new {{NP_Foreign_Entity_Name_Here}}LookupTableViewModel()
+            {
+                Id = id{{NP_Id_Type_ToStringIfNeeded_Here}},
+                DisplayName = displayName,
+                FilterText = \"\"
+            };
+
+            return PartialView(\"_{{NP_Foreign_Entity_Name_Here}}LookupTableModal\", viewModel);
+        }
+"
+					}
+				]
+		}
+	],
+"conditionalTemplates":[
+		{
+			"placeholder": "{{Primary_Key_Inside_Tag_Here}}",
+			"condition": "{{Primary_Key_Here}} != 'int'",
+			"content": "<{{Primary_Key_Here}}>"
+		}
+	]
+}
+
+

@@ -1,0 +1,41 @@
+{
+"propertyTemplates":[
+		{
+			"placeholder" : "{{Property_Looped_Template_Here}}",
+			"condition" : "{{Property_Listed_Here}} == true",
+			"templates" : [
+					{
+					"type" : "default",
+					"content" : "		public {{Property_Type_Here}}{{Property_Nullable_Question_Mark_Here}} {{Property_Name_Here}} { get; set; }
+"
+					}
+				]
+		}
+	],
+"navigationPropertyTemplates":[
+		{
+			"placeholder" : "{{NP_Looped_Declaration_Here}}",
+			"templates" : [
+					{
+					"relation" : "single",
+					"content" : "		 public {{NP_Id_Type_Here}}{{NP_Nullable_Here}} {{NP_Name_Here}} { get; set; }
+		 "
+					}
+				]
+		}
+	],
+"enumTemplates":[
+		{
+			"placeholder" : "{{Enum_Using_Looped_Template_Here}}",
+			"content" : "using {{Enum_Namespace_Here}};
+					"
+		}
+	],
+"conditionalTemplates":[
+		{
+			"placeholder": "{{Primary_Key_Inside_Tag_Here}}",
+			"condition": "{{Primary_Key_Here}} != 'int'",
+			"content": "<{{Primary_Key_Here}}>"
+		}
+	]
+}

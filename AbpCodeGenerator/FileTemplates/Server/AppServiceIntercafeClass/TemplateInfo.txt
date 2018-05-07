@@ -1,0 +1,4 @@
+{
+	"path" : "{{Namespace_Here}}.Application.Shared\\{{Namespace_Relative_Full_Reverse_Slash_Here}}\\I{{Entity_Name_Plural_Here}}AppService.cs",
+	"condition": ""
+}

@@ -1,0 +1,106 @@
+﻿(function () {
+    $(function () {
+
+        var _${{entity_Name_Plural_Here}}Table = $('#{{Entity_Name_Plural_Here}}Table');
+        var _{{entity_Name_Plural_Here}}Service = abp.services.app.{{entity_Name_Plural_Here}};
+
+        var _permissions = {
+            create: abp.auth.hasPermission('{{Permission_Value_Here}}.Create'),
+            edit: abp.auth.hasPermission('{{Permission_Value_Here}}.Edit'),
+            'delete': abp.auth.hasPermission('{{Permission_Value_Here}}.Delete')
+        };
+
+        var _createOrEditModal = new app.ModalManager({
+            viewUrl: abp.appPath + '{{App_Area_Name_Here}}/{{Entity_Name_Plural_Here}}/CreateOrEditModal',
+            scriptUrl: abp.appPath + 'view-resources/Areas/{{App_Area_Name_Here}}/Views/{{Entity_Name_Plural_Here}}/_CreateOrEditModal.js',
+            modalClass: 'CreateOrEdit{{Entity_Name_Here}}Modal'
+        });
+
+        var dataTable = _${{entity_Name_Plural_Here}}Table.DataTable({
+            paging: true,
+            serverSide: true,
+            processing: true,
+            listAction: {
+                ajaxFunction: _{{entity_Name_Plural_Here}}Service.getAll,
+                inputFilter: function () {
+                    return {
+					filter: $('#{{Entity_Name_Plural_Here}}TableFilter').val()
+                    };
+                }
+            },
+            columnDefs: [
+                {
+                    width: 120,
+                    targets: 0,
+                    data: null,
+                    orderable: false,
+                    autoWidth: false,
+                    defaultContent: '',
+                    rowAction: {
+                        cssClass: 'btn btn-brand dropdown-toggle',
+                        text: '<i class="fa fa-cog"></i> ' + app.localize('Actions') + ' <span class="caret"></span>',
+                        items: [
+						{
+                            text: app.localize('Edit'),
+                            visible: function () {
+                                return _permissions.edit;
+                            },
+                            action: function (data) {
+                                _createOrEditModal.open({ id: data.record.{{entity_Name_Here}}.id });
+                            }
+                        }, {
+                            text: app.localize('Delete'),
+                            visible: function () {
+                                return _permissions.delete;
+                            },
+                            action: function (data) {
+                                delete{{Entity_Name_Here}}(data.record.{{entity_Name_Here}});
+                            }
+                        }]
+                    }
+                }{{Property_Looped_Template_Here}}{{NP_Looped_Template_Here}}
+            ]
+        });
+
+
+        function get{{Entity_Name_Plural_Here}}() {
+            dataTable.ajax.reload();
+        }
+
+        function delete{{Entity_Name_Here}}({{entity_Name_Here}}) {
+            abp.message.confirm(
+                '',
+                function (isConfirmed) {
+                    if (isConfirmed) {
+                        _{{entity_Name_Plural_Here}}Service.delete({
+                            id: {{entity_Name_Here}}.id
+                        }).done(function () {
+                            get{{Entity_Name_Plural_Here}}(true);
+                            abp.notify.success(app.localize('SuccessfullyDeleted'));
+                        });
+                    }
+                }
+            );
+        }
+
+        $('#CreateNew{{Entity_Name_Here}}Button').click(function () {
+            _createOrEditModal.open();
+        });
+
+        abp.event.on('app.createOrEdit{{Entity_Name_Here}}ModalSaved', function () {
+            get{{Entity_Name_Plural_Here}}();
+        });
+
+		$('#Get{{Entity_Name_Plural_Here}}Button').click(function (e) {
+            e.preventDefault();
+            get{{Entity_Name_Plural_Here}}();
+        });
+
+		$(document).keypress(function(e) {
+		  if(e.which === 13) {
+			get{{Entity_Name_Plural_Here}}();
+		  }
+		});
+
+    });
+})();

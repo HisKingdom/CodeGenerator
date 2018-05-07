@@ -1,0 +1,4 @@
+{
+	"path" : "{{Namespace_Here}}.Web.Mvc\\wwwroot\\view-resources\\Areas\\{{App_Area_Name_Here}}\\Views\\{{Entity_Name_Plural_Here}}\\_CreateOrEditModal.js",
+	"condition": ""
+}

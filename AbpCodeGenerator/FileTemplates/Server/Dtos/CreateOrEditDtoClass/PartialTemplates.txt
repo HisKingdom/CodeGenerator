@@ -1,0 +1,71 @@
+{
+"propertyTemplates":[
+		{
+			"placeholder" : "{{Property_Looped_Template_Here}}",
+			"condition" : "{{Property_CreateOrEdit_Here}} == true",
+			"templates" : [
+					{
+					"type" : "default",
+					"content" : "{{Required}}{{Regex}}{{MixMaxLength}}{{Range}}
+		public {{Property_Type_Here}}{{Property_Nullable_Question_Mark_Here}} {{Property_Name_Here}} { get; set; }
+		"
+					}
+				]
+		}
+	],
+"navigationPropertyTemplates":[
+		{
+			"placeholder" : "{{Navigation_Property_Looped_Template_Here}}",
+			"templates" : [
+					{
+					"relation" : "single",
+					"content" : "		 public {{NP_Id_Type_Here}}{{NP_Nullable_Here}} {{NP_Name_Here}} { get; set; }
+		 "
+					}
+				]
+		}
+	],
+"enumTemplates":[
+		{
+			"placeholder" : "{{Enum_Using_Looped_Template_Here}}",
+			"content" : "using {{Enum_Namespace_Here}};
+					"
+		}
+	],
+"conditionalTemplates":[
+		{
+			"placeholder": "{{Required}}",
+			"condition": "{{Property_Required_Here}} == true",
+			"content": "
+		[Required]"
+		},
+		{
+			"placeholder": "{{Regex}}",
+			"condition": "{{Property_Regex_Here}} != ''",
+			"content": "
+		[RegularExpression({{Entity_Name_Here}}Consts.{{Property_Name_Here}}Regex)]"
+		},
+		{
+			"placeholder": "{{Range}}",
+			"condition": "{{Property_Is_Range_Set_Here}} == true",
+			"content": "
+		[Range({{Entity_Name_Here}}Consts.Min{{Property_Name_Here}}Value, {{Entity_Name_Here}}Consts.Max{{Property_Name_Here}}Value)]"
+		},
+		{
+			"placeholder": "{{MixMaxLength}}",
+			"condition": "{{Property_MaxLength_Here}} > -1",
+			"content": "
+		[StringLength({{Entity_Name_Here}}Consts.Max{{Property_Name_Here}}Length{{Min_Length_Here}})]"
+		},
+		{
+			"placeholder": "{{Min_Length_Here}}",
+			"condition": "{{Property_MinLength_Here}} > -1",
+			"content": ", MinimumLength = {{Entity_Name_Here}}Consts.Min{{Property_Name_Here}}Length"
+		},
+		{
+			"placeholder": "{{Primary_Key_Inside_Tag_Here}}",
+			"condition": "true",
+			"content": "<{{Primary_Key_Here}}?>"
+		}
+	]
+}

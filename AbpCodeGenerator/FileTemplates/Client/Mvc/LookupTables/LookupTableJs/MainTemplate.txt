@@ -1,0 +1,70 @@
+﻿(function ($) {
+    app.modals.{{NP_Foreign_Entity_Name_Here}}LookupTableModal = function () {
+
+        var _modalManager;
+
+        var _{{entity_Name_Plural_Here}}Service = abp.services.app.{{entity_Name_Plural_Here}};
+        var _${{nP_Foreign_Entity_Name_Here}}Table = $('#{{NP_Foreign_Entity_Name_Here}}Table');
+
+        this.init = function (modalManager) {
+            _modalManager = modalManager;
+        };
+
+
+        var dataTable = _${{nP_Foreign_Entity_Name_Here}}Table.DataTable({
+            paging: true,
+            serverSide: true,
+            processing: true,
+            listAction: {
+                ajaxFunction: _{{entity_Name_Plural_Here}}Service.getAll{{NP_Foreign_Entity_Name_Here}}ForLookupTable,
+                inputFilter: function () {
+                    return {
+                        filter: $('#{{NP_Foreign_Entity_Name_Here}}TableFilter').val()
+                    };
+                }
+            },
+            columnDefs: [
+                {
+                    targets: 0,
+                    data: null,
+                    orderable: false,
+                    autoWidth: false,
+                    defaultContent: "<div class=\"text-center\"><input id='selectbtn' class='btn btn-success' type='button' width='25px' value='Select' /></div>"
+                },
+                {
+                    autoWidth: false,
+                    orderable: false,
+                    targets: 1,
+                    data: "displayName"
+                }
+            ]
+        });
+
+        $('#{{NP_Foreign_Entity_Name_Here}}Table tbody').on('click', '[id*=selectbtn]', function () {
+            var data = dataTable.row($(this).parents('tr')).data();
+            _modalManager.setResult(data);
+            _modalManager.close();
+        });
+
+        function get{{NP_Foreign_Entity_Name_Here}}() {
+            dataTable.ajax.reload();
+        }
+
+        $('#Get{{NP_Foreign_Entity_Name_Here}}Button').click(function (e) {
+            e.preventDefault();
+            get{{NP_Foreign_Entity_Name_Here}}();
+        });
+
+        $('#SelectButton').click(function (e) {
+            e.preventDefault();
+        });
+
+        $(document).keypress(function (e) {
+            if (e.which === 13) {
+                get{{NP_Foreign_Entity_Name_Here}}();
+            }
+        });
+
+    };
+})(jQuery);
+

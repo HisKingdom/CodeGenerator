@@ -1,0 +1,27 @@
+{
+"propertyTemplates":[
+		{
+			"placeholder" : "{{Property_Looped_Template_Here}}",
+			"condition" : "{{Property_Listed_Here}} == true",
+			"templates" : [
+					{
+					"type" : "default",
+					"content" : "
+								<th>@L(\"{{Property_Name_Here}}\")</th>"
+					}
+				]
+		}
+	],
+"navigationPropertyTemplates":[
+		{
+			"placeholder" : "{{NP_Looped_Template_Here}}",
+			"templates" : [
+					{
+					"relation" : "single",
+					"content" : "
+								<th>@L(\"{{NP_Foreign_Entity_Name_Here}}{{NP_Display_Property_Name_Here}}\")</th>"
+					}
+				]
+		}
+	]
+}

@@ -1,0 +1,137 @@
+{
+"propertyTemplates":[
+		{
+			"placeholder" : "{{Property_Looped_Template_Here}}",
+			"condition" : "{{Property_CreateOrEdit_Here}} == true",
+			"templates" : [
+					{
+					"type" : "enum",
+					"content" : "
+								{{LocalizationPrepareForEnum}}
+								<div class=\"form-group m-form__group\">
+								<label for=\"{{Property_Name_Here}}Select\">@L(\"{{Property_Name_Here}}\")</label>
+								<select class=\"form-control m-input m-input--square\" name=\"{{Property_Name_Here}}\" id=\"{{Property_Name_Here}}select\" asp-for=\"@Model.{{Entity_Name_Here}}.{{Property_Name_Here}}\" asp-items=\"@selectList{{Property_Name_Here}}\">
+								</select>
+								</div>
+					"
+					},
+					{
+					"type" : "numeric",
+					"content" : "
+								<div class=\"form-group\">
+								<label>@L(\"{{Property_Name_Here}}\")</label>
+								<input class=\"form-control m-input\" value=\"@Model.{{Entity_Name_Here}}.{{Property_Name_Here}}\" type=\"number\" name=\"{{Property_Name_Here}}\" {{MinValue}} {{MaxValue}}/>
+								</div>
+					"
+					},
+					{
+					"type" : "bool",
+					"content" : "<div class=\"m-checkbox-list\">
+								<label for=\"Edit{{Entity_Name_Here}}_{{Property_Name_Here}}\" class=\"m-checkbox\">
+								<input id=\"Edit{{Entity_Name_Here}}_{{Property_Name_Here}}\" type=\"checkbox\" name=\"{{Property_Name_Here}}\" value=\"true\" @Html.Raw(Model.{{Entity_Name_Here}}.{{Property_Name_Here}} ?\"checked=\\\"checked\\\"\":\"\") />
+								@L(\"{{Property_Name_Here}}\")
+								<span></span>
+								</label>
+								</div>
+					"
+					},
+					{
+					"type" : "DateTime",
+					"content" : "
+								<div class=\"form-group\">
+								<label>@L(\"{{Property_Name_Here}}\")</label>
+								<input class=\"form-control m-input date-picker\" type=\"text\" name=\"{{Property_Name_Here}}\" value=\"@Model.{{Entity_Name_Here}}.{{Property_Name_Here}}\"/>
+								</div>
+					"
+					},
+					{
+					"type" : "default",
+					"content" : "
+								<div class=\"form-group\">
+								<label>@L(\"{{Property_Name_Here}}\")</label>
+								<input class=\"form-control\" value=\"@Model.{{Entity_Name_Here}}.{{Property_Name_Here}}\" type=\"text\" name=\"{{Property_Name_Here}}\" {{Required}} {{MaxLengthHere}} {{MinLengthHere}} {{Regex}} />
+								</div>
+					"
+					}
+				]
+		}
+	],
+"navigationPropertyTemplates":[
+		{
+			"placeholder" : "{{NP_Looped_Template_Here}}",
+			"templates" : [
+					{
+					"relation" : "single",
+					"content" : "            <div class=\"form-group m-form__group\">
+                <label>@L(\"{{NP_Foreign_Entity_Name_Here}}\")</label>
+                <div class=\"input-group\">
+                    <input class=\"form-control\" name=\"{{NP_Foreign_Entity_Name_Here}}{{NP_Display_Property_Name_Here}}{{NP_Duplication_Number_Here}}\" value=\"@Model.{{NP_Foreign_Entity_Name_Here}}{{NP_Display_Property_Name_Here}}{{NP_Duplication_Number_Here}}\" type=\"text\" disabled>
+                    <div class=\"input-group-append\">
+                        <button class=\"btn btn-primary blue\" id=\"Open{{NP_Foreign_Entity_Name_Here}}{{NP_Duplication_Number_Here}}LookupTableButton\" type=\"button\"><i class=\"fa fa-search\"></i> @L(\"Pick\")</button>
+                    </div> <div class=\"input-group-prepend\">
+                        <button class=\"btn btn-danger\" type=\"button\" id=\"Clear{{NP_Foreign_Entity_Name_Here}}{{NP_Display_Property_Name_Here}}{{NP_Duplication_Number_Here}}Button\"><i class=\"fa fa-close\"></i></button>
+                    </div>
+                </div>
+            </div>
+            @if (Model.IsEditMode)
+            {
+				<input class=\"form-control\" value=\"@Model.{{Entity_Name_Here}}.{{NP_Name_Here}}\" type=\"text\" name=\"{{NP_Name_Here}}\" {{NP_IsNullable_Required_Here}} hidden/>
+			}
+            else
+            { 
+				<input class=\"form-control\" value=\"\" type=\"text\" name=\"{{NP_Name_Here}}\" {{NP_IsNullable_Required_Here}} hidden/>
+			}
+
+"
+					}
+				]
+		}
+	],
+"enumTemplates":[
+		{
+			"placeholder" : "{{Enum_Using_Looped_Template_Here}}",
+			"content" : "@using {{Enum_Namespace_Here}};
+					"
+		}
+	],
+"conditionalTemplates":[
+		{
+			"placeholder": "{{LocalizationPrepareForEnum}}",
+			"condition": "",
+			"content": "@{
+					var selectList{{Property_Name_Here}} = Html.GetEnumSelectList(typeof({{Enum_Name_Here}}));
+					 foreach (var selectOption in selectList{{Property_Name_Here}}) { selectOption.Text = L(\"Enum_{{Enum_Name_Here}}_\" + selectOption.Value); }
+					}"
+		},
+		{
+			"placeholder": "{{Required}}",
+			"condition": "{{Property_Required_Here}} == true",
+			"content": " required"
+		},
+		{
+			"placeholder": "{{Regex}}",
+			"condition": "{{Property_Regex_Here}} != ''",
+			"content": " pattern=\"@{{Namespace_Here}}.{{Namespace_Relative_Full_Here}}.{{Entity_Name_Here}}Consts.{{Property_Name_Here}}Regex\""
+		},
+		{
+			"placeholder": "{{MaxLengthHere}}",
+			"condition": "{{Property_MaxLength_Here}} > -1",
+			"content": " maxlength=\"@{{Namespace_Here}}.{{Namespace_Relative_Full_Here}}.{{Entity_Name_Here}}Consts.Max{{Property_Name_Here}}Length\""
+		},
+		{
+			"placeholder": "{{MinLengthHere}}",
+			"condition": "{{Property_MinLength_Here}} > -1",
+			"content": " minlength=\"@{{Namespace_Here}}.{{Namespace_Relative_Full_Here}}.{{Entity_Name_Here}}Consts.Min{{Property_Name_Here}}Length\""
+		},
+		{
+			"placeholder": "{{MaxValue}}",
+			"condition": "{{Property_Is_Range_Set_Here}} == true",
+			"content": " max=\"@{{Namespace_Here}}.{{Namespace_Relative_Full_Here}}.{{Entity_Name_Here}}Consts.Max{{Property_Name_Here}}Value\""
+		},
+		{
+			"placeholder": "{{MinValue}}",
+			"condition": "{{Property_Is_Range_Set_Here}} == true",
+			"content": " min=\"@{{Namespace_Here}}.{{Namespace_Relative_Full_Here}}.{{Entity_Name_Here}}Consts.Min{{Property_Name_Here}}Value\""
+		}
+	]
+}

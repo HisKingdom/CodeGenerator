@@ -1,0 +1,45 @@
+﻿(function ($) {
+    app.modals.CreateOrEdit{{Entity_Name_Here}}Modal = function () {
+
+        var _{{entity_Name_Plural_Here}}Service = abp.services.app.{{entity_Name_Plural_Here}};
+
+        var _modalManager;
+        var _${{entity_Name_Here}}InformationForm = null;
+
+		{{NP_Modal_Init_Here}}
+
+        this.init = function (modalManager) {
+            _modalManager = modalManager;
+
+			var modal = _modalManager.getModal();
+            modal.find('.date-picker').datetimepicker({
+                locale: abp.localization.currentLanguage.name,
+                format: 'L'
+            });
+
+            _${{entity_Name_Here}}InformationForm = _modalManager.getModal().find('form[name={{Entity_Name_Here}}InformationsForm]');
+            _${{entity_Name_Here}}InformationForm.validate();
+        };
+
+		  {{NP_Modal_Open_Clear_Here}}
+
+        this.save = function () {
+            if (!_${{entity_Name_Here}}InformationForm.valid()) {
+                return;
+            }
+
+            var {{entity_Name_Here}} = _${{entity_Name_Here}}InformationForm.serializeFormToObject();
+			
+			 _modalManager.setBusy(true);
+			 _{{entity_Name_Plural_Here}}Service.createOrEdit(
+				{{entity_Name_Here}}
+			 ).done(function () {
+               abp.notify.info(app.localize('SavedSuccessfully'));
+               _modalManager.close();
+               abp.event.trigger('app.createOrEdit{{Entity_Name_Here}}ModalSaved');
+			 }).always(function () {
+               _modalManager.setBusy(false);
+			});
+        };
+    };
+})(jQuery);

@@ -1,0 +1,5 @@
+{
+	"path" : "{{Namespace_Here}}.Application.Shared\\{{Namespace_Relative_Full_Reverse_Slash_Here}}\\Dtos\\{{NP_Foreign_Entity_Name_Here}}LookupTableDto.cs",
+	"condition": "",
+	"foreach":"navigationProperty"
+}

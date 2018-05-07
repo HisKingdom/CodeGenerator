@@ -1,0 +1,67 @@
+{
+"propertyTemplates":[
+		{
+			"placeholder" : "{{Property_Looped_Template_Here}}",
+			"condition" : "{{Property_Listed_Here}} == true",
+			"templates" : [
+					{
+					"type" : "default",
+					"content" : ",
+					{
+						targets: {{Combined_Loop_Index}},
+						 data: \"{{entity_Name_Here}}.{{property_Name_Here}}\" {{Datetime_Formatter}} {{Bool_Formatter}} {{Enum_Formatter}}
+					}"
+					}
+				]
+		}
+	],
+"navigationPropertyTemplates":[
+		{
+			"placeholder" : "{{NP_Looped_Template_Here}}",
+			"templates" : [
+					{
+					"relation" : "single",
+					"content" : ",
+					{
+						targets: {{Combined_Loop_Index}},
+						 data: \"{{nP_Foreign_Entity_Name_Here}}{{NP_Display_Property_Name_Here}}{{NP_Duplication_Number_Here}}\" 
+					}"}
+				]
+		}
+	],
+"conditionalTemplates":[
+		{
+			"placeholder": "{{Datetime_Formatter}}",
+			"condition": "{{Property_Type_Here}} == 'DateTime'",
+			"content": ",
+					render: function ({{property_Name_Here}}) {
+						if ({{property_Name_Here}}) {
+							return moment({{property_Name_Here}}).format(\'L\');
+						}
+						return \"\";
+					}
+			"
+		},
+		{
+			"placeholder": "{{Bool_Formatter}}",
+			"condition": "{{Property_Type_Here}} == 'bool'",
+			"content": ",
+					render: function ({{property_Name_Here}}) {
+						if ({{property_Name_Here}}) {
+							return '<div class=\"text-center\"><i class=\"fa fa-check-circle m--font-success\" title=\"True\"></i></div>';
+						}
+						return '<div class=\"text-center\"><i class=\"fa fa-times-circle\" title=\"False\"></i></div>';
+					}
+			"
+		},
+		{
+			"placeholder": "{{Enum_Formatter}}",
+			"condition": "{{Is_That_Property_Enum}} == true",
+			"content": ",
+					render: function ({{property_Name_Here}}) {
+						return app.localize('Enum_{{Property_Type_Here}}_' + {{property_Name_Here}});;
+					}
+			"
+		}
+	]
+}

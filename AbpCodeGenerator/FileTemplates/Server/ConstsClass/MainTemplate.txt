@@ -1,0 +1,7 @@
+﻿namespace {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}
+{
+    public class {{Entity_Name_Here}}Consts
+    {
+{{Property_Looped_Template_Here}}
+    }
+}

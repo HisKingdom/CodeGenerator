@@ -1,0 +1,58 @@
+﻿@using {{Namespace_Here}}.Authorization
+@using {{Namespace_Here}}.Web.Areas.{{App_Area_Name_Here}}.Models.{{Entity_Name_Plural_Here}}
+@using {{Namespace_Here}}.Web.Areas.{{App_Area_Name_Here}}.Startup
+@model {{Entity_Name_Plural_Here}}ViewModel
+@{
+    ViewBag.CurrentPageName = {{App_Area_Name_Here}}PageNames.{{Page_Names_Sub_Class_Name_Here}}.{{Entity_Name_Plural_Here}};
+}
+@section Scripts
+{
+    <script abp-src="/view-resources/Areas/{{App_Area_Name_Here}}/Views/{{Entity_Name_Plural_Here}}/Index.js" asp-append-version="true"></script>
+}
+<div class="m-subheader">
+    <div class="row align-items-center">
+        <div class="mr-auto col-sm-12 col-md-6">
+            <h3 class="m-subheader__title m-subheader__title--separator">
+                <span>@L("{{Entity_Name_Plural_Here}}")</span>
+            </h3>
+            <span class="m-section__sub">
+                @L("{{Entity_Name_Plural_Here}}HeaderInfo")
+            </span>
+        </div>
+        <div class="col-sm-12 col-md-6 text-right">
+            @if (IsGranted(AppPermissions.{{Permission_Name_Here}}_Create))
+            {
+                <button id="CreateNew{{Entity_Name_Here}}Button" class="btn btn-primary blue"><i class="fa fa-plus"></i> @L("CreateNew{{Entity_Name_Here}}")</button>
+            }
+        </div>
+    </div>
+</div>
+<div class="m-content">
+    <div class="m-portlet m-portlet--mobile">
+        <div class="m-portlet__body">
+			<div class="m-form m-form--label-align-right">
+			   <div class="row align-items-center m--margin-bottom-10">
+                    <div class="col-xl-12">
+                        <div class="form-group m-form__group align-items-center">
+                            <div class="input-group">
+                                <input type="text" id="{{Entity_Name_Plural_Here}}TableFilter" class="form-control m-input" placeholder="@L("SearchWithThreeDot")" value="@Model.FilterText">
+                                <span class="input-group-btn">
+                                    <button id="Get{{Entity_Name_Plural_Here}}Button" class="btn btn-primary" type="submit"><i class="flaticon-search-1"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+			</div>
+            <div class="row align-items-center">
+                <table id="{{Entity_Name_Plural_Here}}Table" class="display table table-striped table-bordered table-hover dt-responsive nowrap">
+                    <thead>
+                        <tr>
+                            <th>@L("Actions")</th>{{Property_Looped_Template_Here}}{{NP_Looped_Template_Here}}
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

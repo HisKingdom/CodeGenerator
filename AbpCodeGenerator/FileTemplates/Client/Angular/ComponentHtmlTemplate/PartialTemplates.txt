@@ -1,0 +1,58 @@
+{
+"propertyTemplates":[
+		{
+			"placeholder" : "{{Property_Looped_Template_Here}}",
+			"condition" : "{{Property_Listed_Here}} == true",
+			"templates" : [
+					{
+					"type" : "enum",
+					"content" : "
+					<p-column field=\"{{entity_Name_Here}}.{{property_Name_Here}}\" header=\"{{l('{{Property_Name_Here}}')}}\" [sortable]=\"true\">
+					<ng-template let-record=\"rowData\" pTemplate=\"body\">
+					{{l('Enum_{{Property_Type_Here}}' + {{property_Type_Here}}[record.{{entity_Name_Here}}.{{property_Name_Here}}])}}
+					</ng-template>
+					</p-column>"
+					},
+					{
+					"type" : "bool",
+					"content" : "
+					<p-column field=\"{{entity_Name_Here}}.{{property_Name_Here}}\" header=\"{{l('{{Property_Name_Here}}')}}\" [sortable]=\"true\">
+					<ng-template let-record=\"rowData\" pTemplate=\"body\">
+					<div *ngIf=\"record.{{entity_Name_Here}}.{{property_Name_Here}}\" class=\"text-center\"><i class=\"fa fa-check-circle m--font-success\" title=\"True\"></i></div>
+					<div *ngIf=\"!record.{{entity_Name_Here}}.{{property_Name_Here}}\" class=\"text-center\"><i class=\"fa fa-times-circle\" title=\"False\"></i></div>
+					</ng-template>
+					</p-column> "
+					},
+					{
+					"type" : "DateTime",
+					"content" : "
+					<p-column field=\"{{entity_Name_Here}}.{{property_Name_Here}}\" header=\"{{l('{{Property_Name_Here}}')}}\" [sortable]=\"true\">
+					<ng-template let-record=\"rowData\" pTemplate=\"body\">
+					<span *ngIf=\"record.{{entity_Name_Here}}.{{property_Name_Here}}\">
+					{{record.{{entity_Name_Here}}.{{property_Name_Here}} | momentFormat:\'L\'}}
+					</span>
+					</ng-template>
+					</p-column>"
+					},
+					{
+					"type" : "default",
+					"content" : "
+					<p-column field=\"{{entity_Name_Here}}.{{property_Name_Here}}\" header=\"{{l('{{Property_Name_Here}}')}}\" [sortable]=\"true\"></p-column> "
+					}
+				]
+		}
+	],
+"navigationPropertyTemplates":[
+		{
+			"placeholder" : "{{NP_Looped_Template_Here}}",
+			"templates" : [
+					{
+					"relation" : "single",
+					"content" : "
+					<p-column field=\"{{nP_Foreign_Entity_Name_Here}}{{NP_Display_Property_Name_Here}}{{NP_Duplication_Number_Here}}\" header=\"{{l('{{NP_Foreign_Entity_Name_Here}}{{NP_Display_Property_Name_Here}}')}}\" [sortable]=\"true\"></p-column>
+		 "
+					}
+				]
+		}
+	]
+}

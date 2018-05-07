@@ -1,0 +1,4 @@
+{
+	"path" : "{{Namespace_Here}}.Core\\{{Namespace_Relative_Full_Reverse_Slash_Here}}\\{{Entity_Name_Here}}.cs",
+	"condition": "",
+}

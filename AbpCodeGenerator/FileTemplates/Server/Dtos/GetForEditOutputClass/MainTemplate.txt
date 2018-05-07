@@ -1,0 +1,13 @@
+﻿using System;
+using Abp.Application.Services.Dto;
+using System.ComponentModel.DataAnnotations;
+
+namespace {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}.Dtos
+{
+    public class Get{{Entity_Name_Here}}ForEditOutput
+    {
+		public CreateOrEdit{{Entity_Name_Here}}Dto {{Entity_Name_Here}} { get; set; }
+
+{{NP_Looped_Display_Property_Here}}
+    }
+}

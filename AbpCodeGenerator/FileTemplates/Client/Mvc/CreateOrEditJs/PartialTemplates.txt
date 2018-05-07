@@ -1,0 +1,42 @@
+{
+"navigationPropertyTemplates":[
+		{
+			"placeholder" : "{{NP_Modal_Init_Here}}",
+			"templates" : [
+					{
+					"relation" : "single",
+					"preventDuplicate":true,
+					"content" : "        var _{{nP_Foreign_Entity_Name_Here}}LookupTableModal = new app.ModalManager({
+            viewUrl: abp.appPath + '{{App_Area_Name_Here}}/{{Entity_Name_Plural_Here}}/{{NP_Foreign_Entity_Name_Here}}LookupTableModal',
+            scriptUrl: abp.appPath + 'view-resources/Areas/{{App_Area_Name_Here}}/Views/{{Entity_Name_Plural_Here}}/_{{NP_Foreign_Entity_Name_Here}}LookupTableModal.js',
+            modalClass: '{{NP_Foreign_Entity_Name_Here}}LookupTableModal'
+        });"
+					}
+				]
+		},
+		{
+			"placeholder" : "{{NP_Modal_Open_Clear_Here}}",
+			"templates" : [
+					{
+					"relation" : "single",
+					"content" : "        $('#Open{{NP_Foreign_Entity_Name_Here}}{{NP_Duplication_Number_Here}}LookupTableButton').click(function () {
+
+            var {{entity_Name_Here}} = _${{entity_Name_Here}}InformationForm.serializeFormToObject();
+
+            _{{nP_Foreign_Entity_Name_Here}}LookupTableModal.open({ id: {{entity_Name_Here}}.{{nP_Name_Here}}, displayName: {{entity_Name_Here}}.{{nP_Foreign_Entity_Name_Here}}{{NP_Display_Property_Name_Here}}{{NP_Duplication_Number_Here}} }, function (data) {
+                _${{entity_Name_Here}}InformationForm.find('input[name={{NP_Foreign_Entity_Name_Here}}{{NP_Display_Property_Name_Here}}{{NP_Duplication_Number_Here}}]').val(data.displayName); 
+                _${{entity_Name_Here}}InformationForm.find('input[name={{NP_Name_Here}}]').val(data.id); 
+            });
+        });
+		
+		$('#Clear{{NP_Foreign_Entity_Name_Here}}{{NP_Display_Property_Name_Here}}{{NP_Duplication_Number_Here}}Button').click(function () {
+                _${{entity_Name_Here}}InformationForm.find('input[name={{NP_Foreign_Entity_Name_Here}}{{NP_Display_Property_Name_Here}}{{NP_Duplication_Number_Here}}]').val(''); 
+                _${{entity_Name_Here}}InformationForm.find('input[name={{NP_Name_Here}}]').val(''); 
+        });
+		
+"
+					}
+				]
+		}
+	]
+}

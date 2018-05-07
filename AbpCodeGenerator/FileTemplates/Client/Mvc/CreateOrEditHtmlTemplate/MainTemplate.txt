@@ -1,0 +1,25 @@
+﻿{{Enum_Using_Looped_Template_Here}}
+@using {{Namespace_Here}}.Web.Areas.{{App_Area_Name_Here}}.Models.Common.Modals
+@using {{Namespace_Here}}.Web.Areas.{{App_Area_Name_Here}}.Models.{{Entity_Name_Plural_Here}}
+@model CreateOrEdit{{Entity_Name_Here}}ModalViewModel
+
+@Html.Partial("~/Areas/{{App_Area_Name_Here}}/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("Edit{{Entity_Name_Here}}")) : L("CreateNew{{Entity_Name_Here}}")))
+
+<div class="modal-body">
+        <div id="{{Entity_Name_Here}}InformationsTab">
+            <form name="{{Entity_Name_Here}}InformationsForm" role="form" novalidate class="form-validation">
+
+                @if (Model.IsEditMode)
+                {
+                    <input type="hidden" name="id" value="@Model.{{Entity_Name_Here}}.Id" />
+                }
+
+				{{NP_Looped_Template_Here}}
+
+				{{Property_Looped_Template_Here}}
+
+            </form>
+        </div>
+</div>
+
+@Html.Partial("~/Areas/{{App_Area_Name_Here}}/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

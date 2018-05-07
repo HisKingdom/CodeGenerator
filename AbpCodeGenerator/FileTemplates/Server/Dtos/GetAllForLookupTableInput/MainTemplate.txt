@@ -1,0 +1,9 @@
+﻿using Abp.Application.Services.Dto;
+
+namespace {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}.Dtos
+{
+    public class GetAllForLookupTableInput : PagedAndSortedResultRequestDto
+    {
+		public string Filter { get; set; }
+    }
+}

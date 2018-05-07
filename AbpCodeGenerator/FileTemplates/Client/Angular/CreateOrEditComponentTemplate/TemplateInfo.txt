@@ -1,0 +1,4 @@
+{
+	"path" : "app\\{{menu_Position_Here}}\\{{Namespace_Relative_Here}}\\{{entity_Name_Plural_Here}}\\create-or-edit-{{entity_Name_Here}}-modal.component.ts",
+	"condition": ""
+}

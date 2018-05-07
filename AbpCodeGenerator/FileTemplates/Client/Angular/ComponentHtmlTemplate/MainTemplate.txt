@@ -1,0 +1,109 @@
+﻿<div [@routerTransition]>
+    <div class="m-subheader">
+        <div class="d-flex align-items-center">
+            <div class="mr-auto col-xs-6">
+                <h3 class="m-subheader__title m-subheader__title--separator">
+                    <span>{{l("{{entity_Name_Plural_Here}}")}}</span>
+                </h3>
+                <span class="m-section__sub">
+                    {{l("{{entity_Name_Plural_Here}}HeaderInfo")}}
+                </span>
+            </div>
+            <div class="col-xs-6 text-right">
+                <button *ngIf="isGranted('{{Permission_Value_Here}}.Create')" (click)="create{{Entity_Name_Here}}()" 
+			class="btn btn-primary blue"><i class="fa fa-plus"></i> {{l("CreateNew{{Entity_Name_Here}}")}}</button>
+            </div>
+        </div>
+    </div>
+    <div class="m-content">
+        <div class="m-portlet m-portlet--mobile">
+            <div class="m-portlet__body">
+
+				<form class="horizontal-form" autocomplete="off">
+                    <div class="m-form m-form--label-align-right">
+                        <div class="row align-items-center m--margin-bottom-10">
+                            <div class="col-xl-12">
+                                <div class="form-group m-form__group align-items-center">
+                                    <div class="input-group">
+                                        <input [(ngModel)]="filterText" name="filterText" autoFocus class="form-control m-input" [placeholder]="l('SearchWithThreeDot')" type="text">
+                                        <span class="input-group-btn">
+                                            <button (click)="get{{Entity_Name_Plural_Here}}()" class="btn btn-primary" type="submit"><i class="flaticon-search-1"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row align-items-center">
+                    <!--<Primeng-Datatable-Start>-->
+                    <div class="primeng-datatable-container"
+                         [busyIf]="primengDatatableHelper.isLoading">
+                        <p-dataTable #dataTable
+                                     (onLazyLoad)="get{{Entity_Name_Plural_Here}}($event)"
+                                     [value]="primengDatatableHelper.records"
+                                     rows="{{primengDatatableHelper.defaultRecordsCountPerPage}}"
+                                     [paginator]="false"
+                                     [lazy]="true"
+                                     emptyMessage="{{l('NoData')}}"
+                                     scrollable="true"
+                                     ScrollWidth="100%"
+                                     responsive="primengDatatableHelper.isResponsive"
+                                     resizableColumns="primengDatatableHelper.resizableColumns">
+
+                            <p-column field=""
+                                      header="{{l('Actions')}}"
+                                      [sortable]="false"
+                                      [style]="{'width':'130px','text-align':'center'}"
+									  [hidden]="!isGrantedAny('{{Permission_Value_Here}}.Edit', '{{Permission_Value_Here}}.Delete')">
+                                <ng-template let-record="rowData" pTemplate="body">
+                                    <div class="btn-group dropdown" normalizePosition>
+                                        <button class="dropdown-toggle btn btn-sm btn-primary"
+                                                data-toggle="dropdown"
+                                                aria-haspopup="true"
+                                                aria-expanded="false">
+                                            <i class="fa fa-cog"></i><span class="caret"></span> {{l("Actions")}}
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a *ngIf="permission.isGranted('{{Permission_Value_Here}}.Edit')"
+                                                   (click)="createOrEdit{{Entity_Name_Here}}Modal.show(record.{{entity_Name_Here}}.id)">{{l('Edit')}}</a>
+                                            </li>
+                                            <li>
+                                                <a *ngIf="permission.isGranted('{{Permission_Value_Here}}.Delete')"
+                                                   (click)="delete{{Entity_Name_Here}}(record.{{entity_Name_Here}})">{{l('Delete')}}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </ng-template>
+                            </p-column>
+
+
+{{NP_Looped_Template_Here}}
+{{Property_Looped_Template_Here}}
+
+
+                        </p-dataTable>
+
+
+                        <div class="primeng-paging-container">
+                            <p-paginator rows="{{primengDatatableHelper.defaultRecordsCountPerPage}}"
+                                         #paginator
+                                         (onPageChange)="get{{Entity_Name_Plural_Here}}($event)"
+                                         [totalRecords]="primengDatatableHelper.totalRecordsCount"
+                                         [rowsPerPageOptions]="primengDatatableHelper.predefinedRecordsCountPerPage">
+                            </p-paginator>
+                            <span class="total-records-count">
+                                {{l('TotalRecordsCount', primengDatatableHelper.totalRecordsCount)}}
+                            </span>
+                        </div>
+                    </div>
+                    <!--<Primeng-Datatable-End>-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <createOrEdit{{Entity_Name_Here}}Modal #createOrEdit{{Entity_Name_Here}}Modal (modalSave)="get{{Entity_Name_Plural_Here}}()"></createOrEdit{{Entity_Name_Here}}Modal>
+</div>

@@ -1,0 +1,166 @@
+{
+"propertyTemplates":[
+		{
+			"placeholder" : "{{Property_Looped_Template_Here}}",
+			"templates" : [
+					{
+					"type" : "string",
+					"content" : " || e.{{Entity_Name_Here}}.{{Property_Name_Here}}.Contains(input.Filter)"
+					},
+				]
+		}
+	],
+"navigationPropertyTemplates":[
+		{
+			"placeholder" : "{{NP_Looped_Declaration_Here}}",
+			"templates" : [
+					{
+					"relation" : "single",
+					"preventDuplicate" : true,
+					"content" : "private readonly IRepository<{{NP_Foreign_Entity_Name_Here}},{{NP_Id_Type_Here}}> _{{nP_Foreign_Entity_Name_Here}}Repository;
+		 "
+					}
+				]
+		},
+		{
+			"placeholder" : "{{NP_Looped_Ctor_Parameter_Here}}",
+			"templates" : [
+					{
+					"relation" : "single",
+					"preventDuplicate" : true,
+					"content" : ", IRepository<{{NP_Foreign_Entity_Name_Here}}, {{NP_Id_Type_Here}}> {{nP_Foreign_Entity_Name_Here}}Repository"
+					}
+				]
+		},
+		{
+			"placeholder" : "{{NP_Looped_Ctor_Initialize_Here}}",
+			"templates" : [
+					{
+					"relation" : "single",
+					"preventDuplicate" : true,
+					"content" : "_{{nP_Foreign_Entity_Name_Here}}Repository = {{nP_Foreign_Entity_Name_Here}}Repository;
+		"
+					}
+				]
+		},
+		{
+			"placeholder" : "{{NP_Looped_Query_Join_Here}}",
+			"templates" : [
+					{
+					"relation" : "single",
+					"content" : "join o{{Loop_Index}} in _{{nP_Foreign_Entity_Name_Here}}Repository.GetAll() on o.{{NP_Name_Here}} equals o{{Loop_Index}}.Id into j{{Loop_Index}}
+                         from s{{Loop_Index}} in j{{Loop_Index}}.DefaultIfEmpty()
+                         "
+					}
+				]
+		},
+		{
+			"placeholder" : "{{NP_Looped_Map_Join_Here}}",
+			"templates" : [
+					{
+					"relation" : "single",
+					"content" : ", {{NP_Foreign_Entity_Name_Here}}{{NP_Display_Property_Name_Here}}{{NP_Duplication_Number_Here}} = s{{Loop_Index}} == null ? \"\" : s{{Loop_Index}}.{{NP_Display_Property_Name_Here}}.ToString()
+					"
+					}
+				]
+		},
+		{
+			"placeholder" : "{{NP_Loop_Include_In_Get_Here}}",
+			"templates" : [
+					{
+					"relation" : "single",
+					"content" : "if (output.{{Entity_Name_Here}}.{{NP_Name_Here}} != null)
+            {
+                var {{nP_Foreign_Entity_Name_Here}} = await _{{nP_Foreign_Entity_Name_Here}}Repository.FirstOrDefaultAsync(({{NP_Id_Type_Here}})output.{{Entity_Name_Here}}.{{NP_Name_Here}});
+                output.{{NP_Foreign_Entity_Name_Here}}{{NP_Display_Property_Name_Here}}{{NP_Duplication_Number_Here}} = {{nP_Foreign_Entity_Name_Here}}.{{NP_Display_Property_Name_Here}}.ToString();
+            }
+			"
+					}
+				]
+		},
+		{
+			"placeholder" : "{{NP_Using_Looped_Template_Here}}",
+			"templates" : [
+					{
+					"relation" : "single",
+					"content" : "using {{NP_Namespace_Here}};
+					"
+					},
+					{
+					"relation" : "multi",
+					"content" : "using {{NP_Namespace_Here}};
+					"
+					}
+				]
+		},
+		{
+			"placeholder" : "{{NP_Looped_GetAllForLookupTable_Here}}",
+			"templates" : [
+					{
+					"relation" : "single",
+					"preventDuplicate":true,
+					"content" : "		 [AbpAuthorize(AppPermissions.{{Permission_Name_Here}})]
+         public async Task<PagedResultDto<{{NP_Foreign_Entity_Name_Here}}LookupTableDto>> GetAll{{NP_Foreign_Entity_Name_Here}}ForLookupTable(GetAllForLookupTableInput input)
+         {
+             var query = _{{nP_Foreign_Entity_Name_Here}}Repository.GetAll().WhereIf(
+                    !string.IsNullOrWhiteSpace(input.Filter),
+                   e=> e.{{NP_Display_Property_Name_Here}}.ToString().Contains(input.Filter)
+                );
+
+            var totalCount = await query.CountAsync();
+
+            var {{nP_Foreign_Entity_Name_Here}}List = await query
+                .PageBy(input)
+                .ToListAsync();
+
+			var lookupTableDtoList = new List<{{NP_Foreign_Entity_Name_Here}}LookupTableDto>();
+			foreach(var {{nP_Foreign_Entity_Name_Here}} in {{nP_Foreign_Entity_Name_Here}}List){
+				lookupTableDtoList.Add(new {{NP_Foreign_Entity_Name_Here}}LookupTableDto
+				{
+					Id = {{nP_Foreign_Entity_Name_Here}}.Id{{NP_Id_Type_ToStringIfNeeded_Here}},
+					DisplayName = {{nP_Foreign_Entity_Name_Here}}.{{NP_Display_Property_Name_Here}}.ToString()
+				});
+			}
+
+            return new PagedResultDto<{{NP_Foreign_Entity_Name_Here}}LookupTableDto>(
+                totalCount,
+                lookupTableDtoList
+            );
+         }"
+					}
+				]
+		}
+	],
+"conditionalTemplates":[
+		{
+			"placeholder": "{{Primary_Key_Inside_Tag_Here}}",
+			"condition": "{{Primary_Key_Here}} != 'int'",
+			"content": "<{{Primary_Key_Here}}>"
+		},
+		{
+			"placeholder": "{{Primary_Key_With_Comma_Here}}",
+			"condition": "{{Primary_Key_Here}} != 'int'",
+			"content": ", {{Primary_Key_Here}}"
+		},
+		{
+			"placeholder": "{{Set_Tenant_Id_Here}}",
+			"condition": "{{Is_Available_To_Host_Here}} != true && {{Is_Available_To_Tenant_Here}} == true",
+			"content": "
+			if (AbpSession.TenantId != null)
+			{
+				{{entity_Name_Here}}.TenantId = (int) AbpSession.TenantId;
+			}
+		"
+		},
+		{
+			"placeholder": "{{Set_Tenant_Id_Here}}",
+			"condition": "{{Is_Available_To_Host_Here}} == true && {{Is_Available_To_Tenant_Here}} == true",
+			"content": "
+			if (AbpSession.TenantId != null)
+			{
+				{{entity_Name_Here}}.TenantId = (int?) AbpSession.TenantId;
+			}
+		"
+		}
+	]
+}

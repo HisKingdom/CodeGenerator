@@ -1,0 +1,13 @@
+﻿{{Enum_Using_Looped_Template_Here}}
+using System;
+using Abp.Application.Services.Dto;
+using System.ComponentModel.DataAnnotations;
+
+namespace {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}.Dtos
+{
+    public class CreateOrEdit{{Entity_Name_Here}}Dto : {{Base_Class_Here}}Dto{{Primary_Key_Inside_Tag_Here}}
+    {
+{{Property_Looped_Template_Here}}
+{{Navigation_Property_Looped_Template_Here}}
+    }
+}

@@ -1,0 +1,4 @@
+{
+	"path" : "{{Namespace_Here}}.Web.Mvc\\Areas\\{{App_Area_Name_Here}}\\Controllers\\{{Entity_Name_Plural_Here}}Controller.cs",
+	"condition": ""
+}

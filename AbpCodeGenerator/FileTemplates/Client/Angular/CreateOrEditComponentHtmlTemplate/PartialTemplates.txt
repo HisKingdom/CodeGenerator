@@ -1,0 +1,145 @@
+{
+"propertyTemplates":[
+		{
+			"placeholder" : "{{Property_Looped_Template_Here}}",
+			"condition" : "{{Property_CreateOrEdit_Here}} == true",
+			"templates" : [
+					{
+					"type" : "enum",
+					"content" : "
+								<div class=\"form-group\">
+								<label for=\"{{Property_Name_Here}}Select\">{{l(\"{{Property_Name_Here}}\")}}</label>
+								<select class=\"form-control\" name=\"{{Property_Name_Here}}\" id=\"{{Property_Name_Here}}Select\" [(ngModel)]=\"{{entity_Name_Here}}.{{property_Name_Here}}\">
+								{{Enum_Option_Looped_Template_Here}}
+								</select>
+								</div>
+					"
+					},
+					{
+					"type" : "numeric",
+					"content" : "
+								<div class=\"form-group\">
+								<label>{{l(\"{{Property_Name_Here}}\")}}</label>
+								<input type=\"number\"  class=\"form-control\" [(ngModel)]=\"{{entity_Name_Here}}.{{property_Name_Here}}\" name=\"{{Property_Name_Here}}\" {{MinValue}} {{MaxValue}}/>
+								</div>
+					"
+					},
+					{
+					"type" : "bool",
+					"content" : "<br/><div class=\"m-checkbox-list\">
+								<label for=\"Edit{{Entity_Name_Here}}_{{Property_Name_Here}}\" class=\"m-checkbox\">
+								<input id=\"Edit{{Entity_Name_Here}}_{{Property_Name_Here}}\" type=\"checkbox\" name=\"{{Property_Name_Here}}\" [(ngModel)]=\"{{entity_Name_Here}}.{{property_Name_Here}}\"> 
+								{{l(\"{{Property_Name_Here}}\")}}
+								<span></span>
+								</label>
+								</div>
+					"
+					},
+					{
+					"type" : "DateTime",
+					"content" : "
+								<div class=\"form-group m-form__group row\">
+								<label for=\"Edit_{{Entity_Name_Here}}_{{Property_Name_Here}}\"  class=\"col-md-12\">{{l(\"{{Property_Name_Here}}\")}}</label>
+								<div class=\"col-lg-10 col-md-9 col-sm-8\">
+								<input class=\"form-control m-input\" type=\"datetime\" datePicker [(selectedDate)]=\"{{entity_Name_Here}}.{{property_Name_Here}}\" id=\"Edit_{{Entity_Name_Here}}_{{Property_Name_Here}}\">
+								</div>
+								</div>
+					"
+					},
+					{
+					"type" : "default",
+					"content" : "
+								<div class=\"form-group\">
+								<label>{{l(\"{{Property_Name_Here}}\")}}</label>
+								<input type=\"text\"  class=\"form-control\" [(ngModel)]=\"{{entity_Name_Here}}.{{property_Name_Here}}\" name=\"{{Property_Name_Here}}\" {{Regex}} {{MinLengthHere}} {{MaxLengthHere}} {{Required}}/>
+								</div>
+					"
+					}
+				]
+		}
+	],
+"navigationPropertyTemplates":[
+		{
+			"placeholder" : "{{NP_Looped_Template_Here}}",
+			"templates" : [
+					{
+					"relation" : "single",
+					"content" : "
+					<div class=\"form-group m-form__group\">
+                        <label>{{l(\"{{NP_Foreign_Entity_Name_Here}}\")}}</label>
+                        <div class=\"input-group\">
+                            <input class=\"form-control\" name=\"{{nP_Foreign_Entity_Name_Here}}{{NP_Display_Property_Name_Here}}{{NP_Duplication_Number_Here}}\" [(ngModel)]=\"{{nP_Foreign_Entity_Name_Here}}{{NP_Display_Property_Name_Here}}{{NP_Duplication_Number_Here}}\" type=\"text\" disabled>     
+                            <div class=\"input-group-append\">
+                                <button class=\"btn btn-primary blue\" (click)=\"openSelect{{NP_Foreign_Entity_Name_Here}}Modal{{NP_Duplication_Number_Here}}()\" type=\"button\"><i class=\"fa fa-search\"></i> {{l(\"Pick\")}}</button>
+                            </div> <div class=\"input-group-prepend\">
+                                <button class=\"btn btn-danger\" type=\"button\" (click)=\"set{{NP_Name_Here}}Null()\"><i class=\"fa fa-close\"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class=\"form-control\" name=\"{{entity_Name_Here}}.{{nP_Name_Here}}\" [(ngModel)]=\"{{entity_Name_Here}}.{{nP_Name_Here}}\" type=\"text\" {{NP_IsNullable_Required_Here}} hidden>
+		 "
+					}
+				]
+		},
+		{
+			"placeholder" : "{{NP_Looped_Edit_Bind_Here}}",
+			"templates" : [
+					{
+					"relation" : "single",
+					"content" : "this.{{entity_Name_Here}}{{NP_Display_Property_Name_Here}}{{NP_Duplication_Number_Here}} = result.{{nP_Foreign_Entity_Name_Here}}{{NP_Display_Property_Name_Here}}{{NP_Duplication_Number_Here}};
+		 "
+					}
+				]
+		},
+		{
+			"placeholder" : "{{NP_Looped_Modal_Here}}",
+			"templates" : [
+					{
+					"relation" : "single",
+					"preventDuplicate":true,
+					"content" : "<{{nP_Foreign_Entity_Name_Here}}LookupTableModal #{{nP_Foreign_Entity_Name_Here}}LookupTableModal{{NP_Duplication_Number_Here}} (modalSave)=\"getNew{{NP_Name_Here}}()\"></{{nP_Foreign_Entity_Name_Here}}LookupTableModal>
+		 "
+					}
+				]
+		}
+	],
+"enumTemplates":[
+		{
+			"placeholder" : "{{Enum_Option_Looped_Template_Here}}",
+			"content" : "
+					<option value=\"{{Enum_Property_Value_Here}}\">{{l(\'Enum_{{Enum_Name_Here}}_{{Enum_Property_Value_Here}}\')}}</option>"
+		}
+	],
+"conditionalTemplates":[
+		{
+			"placeholder": "{{Required}}",
+			"condition": "{{Property_Required_Here}} == true",
+			"content": " required"
+		},
+		{
+			"placeholder": "{{Regex}}",
+			"condition": "{{Property_Regex_Here}} != ''",
+			"content": " pattern=\"{{Property_Regex_Here}}\""
+		},
+		{
+			"placeholder": "{{MaxLengthHere}}",
+			"condition": "{{Property_MaxLength_Here}} > -1",
+			"content": " maxlength=\"{{Property_MaxLength_Here}}\""
+		},
+		{
+			"placeholder": "{{MinLengthHere}}",
+			"condition": "{{Property_MinLength_Here}} > -1",
+			"content": " minlength=\"{{Property_MinLength_Here}}\""
+		},
+		{
+			"placeholder": "{{MaxValue}}",
+			"condition": "{{Property_Is_Range_Set_Here}} == true",
+			"content": " max=\"Property_RangeMax_Here\""
+		},
+		{
+			"placeholder": "{{MinValue}}",
+			"condition": "{{Property_Is_Range_Set_Here}} == true",
+			"content": " min=\"Property_RangeMin_Here\""
+		}
+	]
+}

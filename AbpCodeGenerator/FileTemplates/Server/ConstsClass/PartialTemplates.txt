@@ -1,0 +1,47 @@
+{
+"propertyTemplates":[
+		{
+			"placeholder" : "{{Property_Looped_Template_Here}}",
+			"condition" : "",
+			"templates" : [
+					{
+					"type" : "numeric",
+					"content" : "{{Min_Max_Value_Const_Here}}"
+					},
+					{
+					"type" : "string",
+					"content" : "{{Min_length_Const_Here}}{{Max_length_Const_Here}}{{Regex_Const_Here}}
+						"
+					}
+				]
+		}
+	],
+"conditionalTemplates":[
+		{
+			"placeholder": "{{Min_length_Const_Here}}",
+			"condition": "{{Property_MinLength_Here}} > -1",
+			"content": "
+		public const int Min{{Property_Name_Here}}Length = {{Property_MinLength_Here}};"
+		},
+		{
+			"placeholder": "{{Max_length_Const_Here}}",
+			"condition": "{{Property_MaxLength_Here}} > -1",
+			"content": "
+		public const int Max{{Property_Name_Here}}Length = {{Property_MaxLength_Here}};"
+		},
+		{
+			"placeholder": "{{Regex_Const_Here}}",
+			"condition": "{{Property_Regex_Here}} != ''",
+			"content": "
+		public const string {{Property_Name_Here}}Regex = @\"{{Property_Regex_Here}}\";"
+		},
+		{
+			"placeholder": "{{Min_Max_Value_Const_Here}}",
+			"condition": "{{Property_Is_Range_Set_Here}} == true",
+			"content": "
+		public const long Max{{Property_Name_Here}}Value = {{Property_RangeMax_Here}};
+	
+		public const long Min{{Property_Name_Here}}Value = {{Property_RangeMin_Here}};"
+		}
+	]
+}

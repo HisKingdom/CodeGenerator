@@ -1,0 +1,70 @@
+﻿import { Component, ViewChild, Injector, Output, EventEmitter} from '@angular/core';
+import { ModalDirective } from 'ngx-bootstrap';
+import { {{Entity_Name_Plural_Here}}ServiceProxy, CreateOrEdit{{Entity_Name_Here}}Dto } from '@shared/service-proxies/service-proxies';
+import { AppComponentBase } from '@shared/common/app-component-base';
+{{NP_Looped_Lookup_Component_Import_Here}}
+
+@Component({
+    selector: 'createOrEdit{{Entity_Name_Here}}Modal',
+    templateUrl: './create-or-edit-{{entity_Name_Here}}-modal.component.html'
+})
+export class CreateOrEdit{{Entity_Name_Here}}ModalComponent extends AppComponentBase {
+
+    @ViewChild('createOrEditModal') modal: ModalDirective;
+	{{NP_Looped_ViewChild_Here}}
+
+    @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
+
+    active = false;
+    saving = false;
+
+    {{entity_Name_Here}}: CreateOrEdit{{Entity_Name_Here}}Dto = new CreateOrEdit{{Entity_Name_Here}}Dto();
+	{{NP_Looped_Display_Declaration_Here}}
+
+    constructor(
+        injector: Injector,
+        private _{{entity_Name_Plural_Here}}ServiceProxy: {{Entity_Name_Plural_Here}}ServiceProxy
+    ) {
+        super(injector);
+    }
+
+    show({{entity_Name_Here}}Id?: {{Primary_Key_Type_Here}}): void {
+        if (!{{entity_Name_Here}}Id) { 
+			this.{{entity_Name_Here}} = new CreateOrEdit{{Entity_Name_Here}}Dto();
+			this.{{entity_Name_Here}}.id = {{entity_Name_Here}}Id;
+			{{NP_Looped_Display_Init_Here}}
+			this.active = true;
+			this.modal.show();
+        }
+		else{
+			this._{{entity_Name_Plural_Here}}ServiceProxy.get{{Entity_Name_Here}}ForEdit({{entity_Name_Here}}Id).subscribe(result => {
+				this.{{entity_Name_Here}} = result.{{entity_Name_Here}};
+				{{NP_Looped_Edit_Bind_Here}}
+				this.active = true;
+				this.modal.show();
+			});
+		}  
+    }
+
+    save(): void {
+			this.saving = true;
+			this._{{entity_Name_Plural_Here}}ServiceProxy.createOrEdit(this.{{entity_Name_Here}})
+			 .finally(() => { this.saving = false; })
+			 .subscribe(() => {
+			    this.notify.info(this.l('SavedSuccessfully'));
+				this.close();
+				this.modalSave.emit(null);
+             });
+    }
+
+	{{NP_Looped_OpenModal_Here}}
+
+	{{NP_Looped_SetNull_Here}}
+
+	{{NP_Looped_GetNew_Here}}
+
+    close(): void {
+        this.active = false;
+        this.modal.hide();
+    }
+}

@@ -1,0 +1,81 @@
+﻿import { Component, Injector, ViewEncapsulation, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Http } from '@angular/http';
+import { {{Entity_Name_Plural_Here}}ServiceProxy, {{Entity_Name_Here}}Dto {{Enum_Import_Here}} } from '@shared/service-proxies/service-proxies';
+import { NotifyService } from '@abp/notify/notify.service';
+import { AppComponentBase } from '@shared/common/app-component-base';
+import { TokenAuthServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreateOrEdit{{Entity_Name_Here}}ModalComponent } from './create-or-edit-{{entity_Name_Here}}-modal.component';
+import { appModuleAnimation } from '@shared/animations/routerTransition';
+import { DataTable } from 'primeng/components/datatable/datatable';
+import { Paginator } from 'primeng/components/paginator/paginator';
+import { LazyLoadEvent } from 'primeng/components/common/lazyloadevent';
+
+@Component({
+    templateUrl: './{{entity_Name_Plural_Here}}.component.html',
+    encapsulation: ViewEncapsulation.None,
+    animations: [appModuleAnimation()]
+})
+export class {{Entity_Name_Plural_Here}}Component extends AppComponentBase {
+
+    @ViewChild('createOrEdit{{Entity_Name_Here}}Modal') createOrEdit{{Entity_Name_Here}}Modal: CreateOrEdit{{Entity_Name_Here}}ModalComponent;
+    @ViewChild('dataTable') dataTable: DataTable;
+    @ViewChild('paginator') paginator: Paginator;
+
+	filterText = '';
+	{{enum_Def_Here}}
+
+    constructor(
+        injector: Injector,
+        private _http: Http,
+        private _{{entity_Name_Plural_Here}}ServiceProxy: {{Entity_Name_Plural_Here}}ServiceProxy,
+        private _notifyService: NotifyService,
+        private _tokenAuth: TokenAuthServiceProxy,
+        private _activatedRoute: ActivatedRoute
+    ) {
+        super(injector);
+    }
+
+    get{{Entity_Name_Plural_Here}}(event?: LazyLoadEvent) {
+        if (this.primengDatatableHelper.shouldResetPaging(event)) {
+            this.paginator.changePage(0);
+            return;
+        }
+
+        this.primengDatatableHelper.showLoadingIndicator();
+
+        this._{{entity_Name_Plural_Here}}ServiceProxy.getAll(
+			this.filterText,
+            this.primengDatatableHelper.getSorting(this.dataTable),
+            this.primengDatatableHelper.getSkipCount(this.paginator, event),
+            this.primengDatatableHelper.getMaxResultCount(this.paginator, event)
+        ).subscribe(result => {
+            this.primengDatatableHelper.totalRecordsCount = result.totalCount;
+            this.primengDatatableHelper.records = result.items;
+            this.primengDatatableHelper.hideLoadingIndicator();
+        });
+    }
+
+    reloadPage(): void {
+        this.paginator.changePage(this.paginator.getPage());
+    }
+
+    create{{Entity_Name_Here}}(): void {
+        this.createOrEdit{{Entity_Name_Here}}Modal.show();
+    }
+
+    delete{{Entity_Name_Here}}({{entity_Name_Here}}: {{Entity_Name_Here}}Dto): void {
+        this.message.confirm(
+            '',
+            (isConfirmed) => {
+                if (isConfirmed) {
+                    this._{{entity_Name_Plural_Here}}ServiceProxy.delete({{entity_Name_Here}}.id)
+                        .subscribe(() => {
+                            this.reloadPage();
+                            this.notify.success(this.l('SuccessfullyDeleted'));
+                        });
+                }
+            }
+        );
+    }
+}

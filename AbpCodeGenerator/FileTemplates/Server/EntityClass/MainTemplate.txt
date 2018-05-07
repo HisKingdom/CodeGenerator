@@ -1,0 +1,19 @@
+﻿{{Enum_Using_Looped_Template_Here}}
+{{NP_Using_Looped_Template_Here}}
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Abp.Domain.Entities.Auditing;
+using Abp.Domain.Entities;
+
+namespace {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}
+{
+	[Table("{{Table_Name_Here}}")]
+    public class {{Entity_Name_Here}} : {{Base_Class_Here}}{{Primary_Key_Inside_Tag_Here}} {{May_Or_Must_Tenant_Here}}
+    {
+{{Tenant_Id_Here}}
+
+{{Property_Looped_Template_Here}}
+{{Navigation_Property_Looped_Template_Here}}
+    }
+}
