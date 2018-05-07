@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using System.Linq;
 using AbpCodeGenerator.Lib;
 
 namespace AbpCodeGenerator
@@ -9,14 +10,18 @@ namespace AbpCodeGenerator
     {
         static void Main(string[] args)
         {
-            string className = "Test";
-            string Primary_Key_Inside_Tag_Here = "<long>";
-            CodeGeneratorHelper.SetAppServiceIntercafeClass(className, Primary_Key_Inside_Tag_Here);
-            CodeGeneratorHelper.SetAppServiceClass(className, Primary_Key_Inside_Tag_Here);
+            string className = "User";
 
+            var metaTableInfoList = MetaTableInfo.GetMetaTableInfoList(className);
+            //得到主键类型
+            var propertyType = metaTableInfoList.FirstOrDefault(m => m.Name == "Id").PropertyType;
+
+            CodeGeneratorHelper.SetAppServiceIntercafeClass(className, propertyType);
+            CodeGeneratorHelper.SetAppServiceClass(className, propertyType);
+            CodeGeneratorHelper.SetCreateOrEditInputClass(className, metaTableInfoList);
         }
 
 
-      
+
     }
 }

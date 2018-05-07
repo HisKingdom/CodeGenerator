@@ -1,5 +1,4 @@
-﻿{{NP_Using_Looped_Template_Here}}
-using System;
+﻿using System;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using Abp.Linq.Extensions;
@@ -18,12 +17,10 @@ namespace {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}
     public class {{Entity_Name_Plural_Here}}AppService : {{Project_Name_Here}}AppServiceBase, I{{Entity_Name_Plural_Here}}AppService
     {
 		 private readonly IRepository<{{Entity_Name_Here}}{{Primary_Key_With_Comma_Here}}> _{{entity_Name_Here}}Repository;
-		 {{NP_Looped_Declaration_Here}}
 
 		  public {{Entity_Name_Plural_Here}}AppService(IRepository<{{Entity_Name_Here}}{{Primary_Key_With_Comma_Here}}> {{entity_Name_Here}}Repository {{NP_Looped_Ctor_Parameter_Here}}) 
 		  {
 			_{{entity_Name_Here}}Repository = {{entity_Name_Here}}Repository;
-			{{NP_Looped_Ctor_Initialize_Here}}
 		  }
 
 		 public async Task<PagedResultDto<GetAll{{Entity_Name_Plural_Here}}Output>> GetAll(GetAll{{Entity_Name_Plural_Here}}Input input)
@@ -52,7 +49,7 @@ namespace {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}
          }
 		 
 		 [AbpAuthorize(AppPermissions.{{Permission_Name_Here}}_Edit)]
-		 public async Task<Get{{Entity_Name_Here}}ForEditOutput> Get{{Entity_Name_Here}}ForEdit(EntityDto{{Primary_Key_Inside_Tag_Here}} input)
+		 public async Task<Get{{Entity_Name_Here}}ForEditOutput> Get{{Entity_Name_Here}}ForEdit(EntityDto<{{Primary_Key_Inside_Tag_Here}}> input)
          {
             var {{entity_Name_Here}} = await _{{entity_Name_Here}}Repository.FirstOrDefaultAsync(input.Id);
             var output = new Get{{Entity_Name_Here}}ForEditOutput {{{Entity_Name_Here}} = ObjectMapper.Map<CreateOrEdit{{Entity_Name_Here}}Dto>({{entity_Name_Here}})};
@@ -90,11 +87,10 @@ namespace {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}
          }
 
 		 [AbpAuthorize(AppPermissions.{{Permission_Name_Here}}_Delete)]
-         public async Task Delete(EntityDto{{Primary_Key_Inside_Tag_Here}} input)
+         public async Task Delete(EntityDto<{{Primary_Key_Inside_Tag_Here}}> input)
          {
             await _{{entity_Name_Here}}Repository.DeleteAsync(input.Id);
          }
 
-{{NP_Looped_GetAllForLookupTable_Here}}
     }
 }

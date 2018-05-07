@@ -10,12 +10,11 @@ namespace {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}
     {
         Task<PagedResultDto<GetAll{{Entity_Name_Plural_Here}}Output>> GetAll(GetAll{{Entity_Name_Plural_Here}}Input input);
 
-		Task<Get{{Entity_Name_Here}}ForEditOutput> Get{{Entity_Name_Here}}ForEdit(EntityDto{{Primary_Key_Inside_Tag_Here}} input);
+		Task<Get{{Entity_Name_Here}}ForEditOutput> Get{{Entity_Name_Here}}ForEdit(EntityDto<{{Primary_Key_Inside_Tag_Here}}> input);
 
 		Task CreateOrEdit(CreateOrEdit{{Entity_Name_Here}}Dto input);
 
-		Task Delete(EntityDto{{Primary_Key_Inside_Tag_Here}} input);
+		Task Delete(EntityDto<{{Primary_Key_Inside_Tag_Here}}> input);
 
-		{{NP_Looped_Method_Declaration_Here}}
     }
 }

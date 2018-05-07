@@ -99,17 +99,6 @@ namespace AbpCodeGenerator.Lib
             return list;
         }
 
-        public static string GetFirstToLowerStr(string s)
-        {
-            if (!string.IsNullOrEmpty(s))
-            {
-                if (s.Length > 1)
-                {
-                    return char.ToLower(s[0]) + s.Substring(1);
-                }
-                return char.ToLower(s[0]).ToString();
-            }
-            return null;
-        }
+   
     }
 }
