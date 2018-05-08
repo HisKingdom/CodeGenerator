@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -9,7 +10,7 @@ namespace AbpCodeGenerator.Lib
 {
     public class MetaTableInfo
     {
-    
+
 
         /// <summary>
         /// 属性名称
@@ -26,7 +27,30 @@ namespace AbpCodeGenerator.Lib
         /// </summary>
         public string Annotation { get; set; }
 
-        public static List<MetaTableInfo> GetMetaTableInfoList(string className)
+        public static List<MetaTableInfo> GetMetaTableInfoListForMysql(string tableName)
+        {
+            var mysqlEntity = MysqlEntity.GetMysqlEntityByTableName(tableName);
+            var metaTableInfoList = new List<MetaTableInfo>();
+            foreach (var item in mysqlEntity.Fields)
+            {
+                var metaTableInfo = new MetaTableInfo
+                {
+                    Name = item.Name,
+                    Annotation = item.Comment,
+                    PropertyType = item.Type
+                };
+                metaTableInfoList.Add(metaTableInfo);
+            }
+
+            return metaTableInfoList;
+        }
+
+        /// <summary>
+        /// 根据类名 反射得到类的信息
+        /// </summary>
+        /// <param name="className">类名</param>
+        /// <returns></returns>
+        public static List<MetaTableInfo> GetMetaTableInfoListForAssembly(string className)
         {
 
             var list = new List<MetaTableInfo>();
@@ -96,6 +120,6 @@ namespace AbpCodeGenerator.Lib
             return list;
         }
 
-   
+
     }
 }

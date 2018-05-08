@@ -29,5 +29,18 @@ namespace AbpCodeGenerator.Lib
         /// 输出目录路径  生成的代码输出到那个项目下
         /// </summary>
         public static string Application_Directory = _configuration["Application_Directory"];
+
+
+        /// <summary>
+        /// mysql数据库连接字符串
+        /// </summary>
+        public static string MysqlConnection = _configuration["ConnectionStrings:MysqlConnection"];
+
+        /// <summary>
+        ///数据库名称
+        /// </summary>
+        public static string DbName = _configuration["ConnectionStrings:DbName"];
+
+
     }
 }
