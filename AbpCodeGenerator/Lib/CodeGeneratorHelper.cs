@@ -45,10 +45,18 @@ namespace AbpCodeGenerator.Lib
 
             foreach (var item in metaTableInfoList)
             {
-                sb.AppendLine("<div class=\"form - group \">");
-                sb.AppendLine("  <input class=\"form - control@(Model." + item.Name + ".IsNullOrEmpty() ? \"\" : \" edited\")");
+                sb.AppendLine("<div class=\"form-group \">");
+                if (item.PropertyType=="string")
+                {
+                    sb.AppendLine("  <input class=\"form-control@(Model." + className + "." + item.Name + ".IsNullOrEmpty() ? \"\" : \" edited\")\"");
+                }
+                else
+                {
+                    sb.AppendLine("  <input class=\"form-control\"");
+                }
+     
                 sb.AppendLine("type=\"text\" name=\"" + item.Name + "\"");
-                sb.AppendLine("value=\"@Model." + item.Name + "\"");
+                sb.AppendLine("value=\"@Model." + className + "." + item.Name + "\" />");
                 sb.AppendLine("</div> ");
             }
             var property_Looped_Template_Here = sb.ToString();
@@ -69,7 +77,7 @@ namespace AbpCodeGenerator.Lib
         /// 生成CreateOrEditJs
         /// </summary>
         /// <param name="className"></param>
-        public static void SetCreateOrEditJs(string className, string primary_Key_Here)
+        public static void SetCreateOrEditJs(string className)
         {
             string appServiceIntercafeClassDirectory = Configuration.RootDirectory + @"\Client\Mvc\CreateOrEditJs\MainTemplate.txt";
             var templateContent = Read(appServiceIntercafeClassDirectory);
@@ -78,6 +86,7 @@ namespace AbpCodeGenerator.Lib
                                              .Replace("{{Namespace_Relative_Full_Here}}", className)
                                              .Replace("{{Entity_Name_Plural_Here}}", className)
                                              .Replace("{{Entity_Name_Here}}", className)
+                                             .Replace("{{entity_Name_Here}}", GetFirstToLowerStr(className))
                                              .Replace("{{entity_Name_Plural_Here}}", GetFirstToLowerStr(className))
                                              ;
             Write(Configuration.Web_Mvc_Directory + "\\wwwroot\\view-resources\\Areas\\Admin\\Views\\" + className + "\\", "_CreateOrEditModal.js", templateContent);
@@ -99,7 +108,7 @@ namespace AbpCodeGenerator.Lib
                                              .Replace("{{Entity_Name_Here}}", className)
                                              .Replace("{{App_Area_Name_Here}}", Configuration.App_Area_Name)
                                              ;
-            Write(Configuration.Web_Mvc_Directory + "Areas\\Admin\\Models\\" + className + "\\", "CreateOrEdit" + className + "ModalViewModel.cs", templateContent);
+            Write(Configuration.Web_Mvc_Directory + "Areas\\Admin\\Models\\" + className + "s\\", "CreateOrEdit" + className + "ModalViewModel.cs", templateContent);
         }
 
 
@@ -125,6 +134,7 @@ namespace AbpCodeGenerator.Lib
                                              .Replace("{{Entity_Name_Here}}", className)
                                              .Replace("{{App_Area_Name_Here}}", Configuration.App_Area_Name)
                                              .Replace("{{Property_Looped_Template_Here}}", property_Looped_Template_Here)
+                                             .Replace("{{Permission_Name_Here}}", $"Pages_Administration_{className}")
                                              ;
             Write(Configuration.Web_Mvc_Directory + "Areas\\Admin\\Views\\" + className + "\\", "Index.cshtml", templateContent);
         }
@@ -134,15 +144,30 @@ namespace AbpCodeGenerator.Lib
         /// 生成IndexJsTemplate
         /// </summary>
         /// <param name="className"></param>
-        public static void SetIndexJsTemplate(string className, string primary_Key_Here)
+        public static void SetIndexJsTemplate(string className, List<MetaTableInfo> metaTableInfoList)
         {
             string appServiceIntercafeClassDirectory = Configuration.RootDirectory + @"\Client\Mvc\IndexJsTemplate\MainTemplate.txt";
             var templateContent = Read(appServiceIntercafeClassDirectory);
 
-            templateContent = templateContent                                          
+            StringBuilder sb = new StringBuilder();
+            var i = 1;
+            foreach (var item in metaTableInfoList)
+            {
+                sb.AppendLine(", {");
+                sb.AppendLine("targets: " + i + ",");
+                sb.AppendLine("data: \"" + item.Name + "\"");
+                sb.AppendLine("}");
+                i++;
+            }
+            var property_Looped_Template_Here = sb.ToString();
+            templateContent = templateContent
                                              .Replace("{{Entity_Name_Plural_Here}}", className)
                                              .Replace("{{Entity_Name_Here}}", className)
+                                             .Replace("{{entity_Name_Here}}", GetFirstToLowerStr(className))
                                              .Replace("{{entity_Name_Plural_Here}}", GetFirstToLowerStr(className))
+                                             .Replace("{{App_Area_Name_Here}}", Configuration.App_Area_Name)
+                                             .Replace("{{Property_Looped_Template_Here}}", property_Looped_Template_Here)
+                                             .Replace("{{Permission_Value_Here}}", "Pages.Administration." + className + "")
                                              ;
             Write(Configuration.Web_Mvc_Directory + "\\wwwroot\\view-resources\\Areas\\Admin\\Views\\" + className + "\\", "Index.js", templateContent);
         }

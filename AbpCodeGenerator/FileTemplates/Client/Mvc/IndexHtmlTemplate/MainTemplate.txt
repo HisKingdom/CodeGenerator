@@ -1,9 +1,9 @@
 ﻿@using {{Namespace_Here}}.Authorization
-@using {{Namespace_Here}}.Web.Areas.{{App_Area_Name_Here}}.Models.{{Entity_Name_Plural_Here}}
+@using {{Namespace_Here}}.Web.Areas.{{App_Area_Name_Here}}.Models.{{Entity_Name_Plural_Here}}s
 @using {{Namespace_Here}}.Web.Areas.{{App_Area_Name_Here}}.Startup
-@model {{Entity_Name_Plural_Here}}ViewModel
+
 @{
-    ViewBag.CurrentPageName = {{App_Area_Name_Here}}PageNames.{{Page_Names_Sub_Class_Name_Here}}.{{Entity_Name_Plural_Here}};
+    ViewBag.CurrentPageName = {{App_Area_Name_Here}}PageNames.{{Entity_Name_Plural_Here}}.Index;
 }
 @section Scripts
 {

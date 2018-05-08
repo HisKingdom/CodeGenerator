@@ -1,9 +1,11 @@
-﻿using {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}.Dtos;
+﻿using {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}s.Dtos;
 
-namespace {{Namespace_Here}}.Web.Areas.{{App_Area_Name_Here}}.Models.{{Entity_Name_Plural_Here}}
+namespace {{Namespace_Here}}.Web.Areas.{{App_Area_Name_Here}}.Models.{{Entity_Name_Plural_Here}}s
 {
     public class CreateOrEdit{{Entity_Name_Here}}ModalViewModel
     {
        public CreateOrEdit{{Entity_Name_Here}}Input {{Entity_Name_Here}} { get; set; }
+
+	   public bool IsEditMode => {{Entity_Name_Here}}.Id.HasValue;
     }
 }

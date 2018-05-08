@@ -1,6 +1,6 @@
-﻿{{Enum_Using_Looped_Template_Here}}
+﻿@using Abp.Extensions
 @using {{Namespace_Here}}.Web.Areas.{{App_Area_Name_Here}}.Models.Common.Modals
-@using {{Namespace_Here}}.Web.Areas.{{App_Area_Name_Here}}.Models.{{Entity_Name_Plural_Here}}
+@using {{Namespace_Here}}.Web.Areas.{{App_Area_Name_Here}}.Models.{{Entity_Name_Plural_Here}}s
 @model CreateOrEdit{{Entity_Name_Here}}ModalViewModel
 
 @Html.Partial("~/Areas/{{App_Area_Name_Here}}/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("Edit{{Entity_Name_Here}}")) : L("CreateNew{{Entity_Name_Here}}")))
@@ -9,7 +9,7 @@
         <div id="{{Entity_Name_Here}}InformationsTab">
             <form name="{{Entity_Name_Here}}InformationsForm" role="form" novalidate class="form-validation">
 
-                @if (Model.IsEditMode)
+                @if (Model.{{Entity_Name_Here}}.IsEditMode)
                 {
                     <input type="hidden" name="id" value="@Model.{{Entity_Name_Here}}.Id" />
                 }

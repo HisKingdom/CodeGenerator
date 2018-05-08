@@ -58,7 +58,7 @@
                             }
                         }]
                     }
-                }{{Property_Looped_Template_Here}}{{NP_Looped_Template_Here}}
+                }{{Property_Looped_Template_Here}}
             ]
         });
 

@@ -13,3 +13,8 @@
     <text name="CreatingNew{{Entity_Name_Here}}">创建</text>
 	<text name="Editing{{Entity_Name_Here}}">编辑</text>
     <text name="Deleting{{Entity_Name_Here}}">删除</text>
+
+	    public static class {{Entity_Name_Here}}
+        {
+            public const string Index = "Administration.{{Entity_Name_Here}}.Index";
+        }
