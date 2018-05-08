@@ -2,11 +2,11 @@
 using System.Threading.Tasks;
 using Abp.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using {{Namespace_Here}}.Web.Areas.{{App_Area_Name_Here}}.Models.{{Entity_Name_Plural_Here}};
+using {{Namespace_Here}}.Web.Areas.{{App_Area_Name_Here}}.Models.{{Entity_Name_Plural_Here}}s;
 using {{Namespace_Here}}.Web.Controllers;
 using {{Namespace_Here}}.Authorization;
-using {{Namespace_Here}}.{{Namespace_Relative_Full_Here}};
-using {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}.Dtos;
+using {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}s;
+using {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}s.Dtos;
 using Abp.Application.Services.Dto;
 
 namespace {{Namespace_Here}}.Web.Areas.{{App_Area_Name_Here}}.Controllers
@@ -38,7 +38,7 @@ namespace {{Namespace_Here}}.Web.Areas.{{App_Area_Name_Here}}.Controllers
 			Get{{Entity_Name_Here}}ForEditOutput get{{Entity_Name_Here}}ForEditOutput;
 
 			if (id.HasValue){
-				get{{Entity_Name_Here}}ForEditOutput = await _{{entity_Name_Plural_Here}}AppService.Get{{Entity_Name_Here}}ForEdit(new EntityDto{{Primary_Key_Inside_Tag_Here}} { Id = ({{Primary_Key_Here}}) id });
+				get{{Entity_Name_Here}}ForEditOutput = await _{{entity_Name_Plural_Here}}AppService.Get{{Entity_Name_Here}}ForEdit(new EntityDto<{{Primary_Key_Here}}> { Id =  id });
 			}
 			else{
 				get{{Entity_Name_Here}}ForEditOutput = new Get{{Entity_Name_Here}}ForEditOutput{
@@ -48,12 +48,12 @@ namespace {{Namespace_Here}}.Web.Areas.{{App_Area_Name_Here}}.Controllers
 
             var viewModel = new CreateOrEdit{{Entity_Name_Here}}ModalViewModel()
             {
-				{{Entity_Name_Here}} = get{{Entity_Name_Here}}ForEditOutput.{{Entity_Name_Here}}{{NP_Looped_Display_Property_Init_Here}}
+				{{Entity_Name_Here}} = get{{Entity_Name_Here}}ForEditOutput.{{Entity_Name_Here}}
             };
 
             return PartialView("_CreateOrEditModal", viewModel);
         }
 
-{{NP_Looped_Controller_Here}}
+
     }
 }

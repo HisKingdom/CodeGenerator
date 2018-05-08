@@ -5,13 +5,13 @@ using Abp.Linq.Extensions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Abp.Domain.Repositories;
-using {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}.Dtos;
+using {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}s.Dtos;
 using Abp.Application.Services.Dto;
 using {{Namespace_Here}}.Authorization;
 using Abp.Authorization;
 using Microsoft.EntityFrameworkCore;
 
-namespace {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}
+namespace {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}s
 {
 	[AbpAuthorize(AppPermissions.{{Permission_Name_Here}})]
     public class {{Entity_Name_Plural_Here}}AppService : {{Project_Name_Here}}AppServiceBase, I{{Entity_Name_Plural_Here}}AppService

@@ -2,7 +2,7 @@
 using Abp.Runtime.Validation;
 using {{Namespace_Here}}.Dto;
 
-namespace {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}.Dtos
+namespace {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}s.Dtos
 {
     public class Get{{Entity_Name_Here}}Input : PagedAndSortedInputDto, IShouldNormalize
     {

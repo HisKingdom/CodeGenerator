@@ -30,6 +30,21 @@ namespace AbpCodeGenerator.Lib
         /// </summary>
         public static string Application_Directory = _configuration["Application_Directory"];
 
+        /// <summary>
+        /// Mvc输出目录路径  生成的代码输出到那个项目下
+        /// </summary>
+        public static string Web_Mvc_Directory = _configuration["Web_Mvc:Web_Mvc_Directory"];
+
+        /// <summary>
+        ///区域名
+        /// </summary>
+        public static string App_Area_Name = _configuration["Web_Mvc:App_Area_Name"];
+
+        /// <summary>
+        ///控制器基类
+        /// </summary>
+        public static string Controller_Base_Class = _configuration["Web_Mvc:Controller_Base_Class"];
+
 
         /// <summary>
         /// mysql数据库连接字符串

@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using Abp.Application.Services;
 using Abp.Application.Services.Dto;
-using {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}.Dtos;
+using {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}s.Dtos;
 
-namespace {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}
+namespace {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}s
 {
     public interface I{{Entity_Name_Plural_Here}}AppService : IApplicationService 
     {

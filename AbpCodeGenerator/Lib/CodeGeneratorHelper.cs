@@ -10,6 +10,49 @@ namespace AbpCodeGenerator.Lib
 
         #region client
 
+        /// <summary>
+        /// 生成ControllerClass
+        /// </summary>
+        /// <param name="className"></param>
+        public static void SetControllerClass(string className, string primary_Key_Here)
+        {
+            string appServiceIntercafeClassDirectory = Configuration.RootDirectory + @"\Client\Mvc\ControllerClass\MainTemplate.txt";
+            var templateContent = Read(appServiceIntercafeClassDirectory);
+
+            templateContent = templateContent.Replace("{{Namespace_Here}}", Configuration.Namespace_Here)
+                                             .Replace("{{Namespace_Relative_Full_Here}}", className)
+                                             .Replace("{{Entity_Name_Plural_Here}}", className)
+                                             .Replace("{{Entity_Name_Here}}", className)
+                                             .Replace("{{Permission_Name_Here}}", $"Pages_Administration_{className}")
+                                             .Replace("{{App_Area_Name_Here}}", Configuration.App_Area_Name)
+                                             .Replace("{{Primary_Key_Here}}", primary_Key_Here)
+                                             .Replace("{{Project_Name_Here}}", Configuration.Controller_Base_Class)
+                                             .Replace("{{entity_Name_Plural_Here}}", GetFirstToLowerStr(className))
+                                             ;
+            Write(Configuration.Web_Mvc_Directory + "Areas\\Admin\\Controllers\\", className + "Controller.cs", templateContent);
+        }
+
+        /// <summary>
+        /// 生成CreateOrEditHtmlTemplate
+        /// </summary>
+        /// <param name="className"></param>
+        public static void SetCreateOrEditHtmlTemplate(string className, string primary_Key_Here)
+        {
+            string appServiceIntercafeClassDirectory = Configuration.RootDirectory + @"\Client\Mvc\CreateOrEditHtmlTemplate\MainTemplate.txt";
+            var templateContent = Read(appServiceIntercafeClassDirectory);
+
+            templateContent = templateContent.Replace("{{Namespace_Here}}", Configuration.Namespace_Here)
+                                             .Replace("{{Namespace_Relative_Full_Here}}", className)
+                                             .Replace("{{Entity_Name_Plural_Here}}", className)
+                                             .Replace("{{Entity_Name_Here}}", className)
+                                             .Replace("{{Permission_Name_Here}}", $"Pages_Administration_{className}")
+                                             .Replace("{{App_Area_Name_Here}}", Configuration.App_Area_Name)
+                                             .Replace("{{Primary_Key_Here}}", primary_Key_Here)
+                                             .Replace("{{Project_Name_Here}}", Configuration.Controller_Base_Class)
+                                             .Replace("{{entity_Name_Plural_Here}}", GetFirstToLowerStr(className))
+                                             ;
+            Write(Configuration.Web_Mvc_Directory + "Areas\\Admin\\Views\\" + className + "\\", "CreateOrEditModal.cshtml", templateContent);
+        }
         #endregion
 
 
@@ -18,8 +61,8 @@ namespace AbpCodeGenerator.Lib
         /// 生成接口信息
         /// </summary>
         /// <param name="className"></param>
-        /// <param name="Primary_Key_Inside_Tag_Here">主键类型</param>
-        public static void SetAppServiceIntercafeClass(string className, string Primary_Key_Inside_Tag_Here)
+        /// <param name="primary_Key_Inside_Tag_Here">主键类型</param>
+        public static void SetAppServiceIntercafeClass(string className, string primary_Key_Inside_Tag_Here)
         {
             string appServiceIntercafeClassDirectory = Configuration.RootDirectory + @"\Server\AppServiceIntercafeClass\MainTemplate.txt";
             var templateContent = Read(appServiceIntercafeClassDirectory);
@@ -28,9 +71,9 @@ namespace AbpCodeGenerator.Lib
                                              .Replace("{{Namespace_Relative_Full_Here}}", className)
                                              .Replace("{{Entity_Name_Plural_Here}}", className)
                                              .Replace("{{Entity_Name_Here}}", className)
-                                             .Replace("{{Primary_Key_Inside_Tag_Here}}", Primary_Key_Inside_Tag_Here)
+                                             .Replace("{{Primary_Key_Inside_Tag_Here}}", primary_Key_Inside_Tag_Here)
                                              ;
-            Write(Configuration.Application_Directory + className + "\\", "I" + className + "AppService.cs", templateContent);
+            Write(Configuration.Application_Directory + className + "s\\", "I" + className + "AppService.cs", templateContent);
         }
 
         /// <summary>
@@ -57,10 +100,8 @@ namespace AbpCodeGenerator.Lib
                                              .Replace("{{Project_Name_Here}}", $"XinYunFen")//这里需要改成自己项目的父类
                                              .Replace("{{Primary_Key_With_Comma_Here}}", Primary_Key_With_Comma_Here)
                                              ;
-            Write(Configuration.Application_Directory + className + "\\", className + "AppService.cs", templateContent);
+            Write(Configuration.Application_Directory + className + "s\\", className + "AppService.cs", templateContent);
         }
-        #endregion
-
 
 
         #region Dtos
@@ -78,7 +119,7 @@ namespace AbpCodeGenerator.Lib
                                              .Replace("{{Namespace_Relative_Full_Here}}", className)
                                              .Replace("{{Entity_Name_Here}}", className)
                                              ;
-            Write(Configuration.Application_Directory + className + "\\Dtos\\", "Get" + className + "Input.cs", templateContent);
+            Write(Configuration.Application_Directory + className + "s\\Dtos\\", "Get" + className + "Input.cs", templateContent);
         }
 
 
@@ -95,7 +136,7 @@ namespace AbpCodeGenerator.Lib
                                              .Replace("{{Namespace_Relative_Full_Here}}", className)
                                              .Replace("{{Entity_Name_Here}}", className)
                                              ;
-            Write(Configuration.Application_Directory + className + "\\Dtos\\", "Get" + className + "ForEditOutput.cs", templateContent);
+            Write(Configuration.Application_Directory + className + "s\\Dtos\\", "Get" + className + "ForEditOutput.cs", templateContent);
         }
 
 
@@ -124,7 +165,7 @@ namespace AbpCodeGenerator.Lib
                                              .Replace("{{Entity_Name_Here}}", className)
                                              .Replace("{{Property_Looped_Template_Here}}", property_Looped_Template_Here)
                                              ;
-            Write(Configuration.Application_Directory + className + "\\Dtos\\", className + "ListDto.cs", templateContent);
+            Write(Configuration.Application_Directory + className + "s\\Dtos\\", className + "ListDto.cs", templateContent);
         }
 
 
@@ -153,7 +194,7 @@ namespace AbpCodeGenerator.Lib
                                              .Replace("{{Entity_Name_Here}}", className)
                                              .Replace("{{Property_Looped_Template_Here}}", property_Looped_Template_Here)
                                              ;
-            Write(Configuration.Application_Directory + className + "\\Dtos\\", "CreateOrEdit" + className + "Input.cs", templateContent);
+            Write(Configuration.Application_Directory + className + "s\\Dtos\\", "CreateOrEdit" + className + "Input.cs", templateContent);
         }
 
 
@@ -165,14 +206,20 @@ namespace AbpCodeGenerator.Lib
         {
             string appServiceIntercafeClassDirectory = Configuration.RootDirectory + @"\Server\ConstsClass\MainTemplate.txt";
             var templateContent = Read(appServiceIntercafeClassDirectory);
-        
+
             templateContent = templateContent.Replace("{{entity_Name_Here}}", GetFirstToLowerStr(className))
                                              .Replace("{{Entity_Name_Here}}", className)
                                              ;
-            Write(Configuration.Application_Directory + className + "\\", className + "ConstsClass.txt", templateContent);
+            Write(Configuration.Application_Directory + className + "s\\", className + "ConstsClass.txt", templateContent);
         }
 
         #endregion
+
+        #endregion
+
+
+
+
 
         #region 文件读取
         public static string Read(string path)

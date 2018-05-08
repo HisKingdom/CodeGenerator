@@ -14,7 +14,6 @@
                     <input type="hidden" name="id" value="@Model.{{Entity_Name_Here}}.Id" />
                 }
 
-				{{NP_Looped_Template_Here}}
 
 				{{Property_Looped_Template_Here}}
 
