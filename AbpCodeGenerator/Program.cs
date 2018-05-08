@@ -18,7 +18,7 @@ namespace AbpCodeGenerator
 
             var metaTableInfoList = MetaTableInfo.GetMetaTableInfoList(className);
             ////得到主键类型
-            //var propertyType = metaTableInfoList.FirstOrDefault(m => m.Name == "Id").PropertyType;
+            var propertyType = metaTableInfoList.FirstOrDefault(m => m.Name == "Id").PropertyType;
 
             //CodeGeneratorHelper.SetAppServiceIntercafeClass(className, propertyType);
             //CodeGeneratorHelper.SetAppServiceClass(className, propertyType);
