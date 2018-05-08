@@ -48,7 +48,8 @@
                 <table id="{{Entity_Name_Plural_Here}}Table" class="display table table-striped table-bordered table-hover dt-responsive nowrap">
                     <thead>
                         <tr>
-                            <th>@L("Actions")</th>{{Property_Looped_Template_Here}}{{NP_Looped_Template_Here}}
+                            <th>@L("Actions")</th>
+							{{Property_Looped_Template_Here}}
                         </tr>
                     </thead>
                 </table>

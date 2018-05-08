@@ -21,7 +21,7 @@
             _${{entity_Name_Here}}InformationForm.validate();
         };
 
-		  {{NP_Modal_Open_Clear_Here}}
+		 
 
         this.save = function () {
             if (!_${{entity_Name_Here}}InformationForm.valid()) {

@@ -36,23 +36,117 @@ namespace AbpCodeGenerator.Lib
         /// 生成CreateOrEditHtmlTemplate
         /// </summary>
         /// <param name="className"></param>
-        public static void SetCreateOrEditHtmlTemplate(string className, string primary_Key_Here)
+        public static void SetCreateOrEditHtmlTemplate(string className, List<MetaTableInfo> metaTableInfoList)
         {
             string appServiceIntercafeClassDirectory = Configuration.RootDirectory + @"\Client\Mvc\CreateOrEditHtmlTemplate\MainTemplate.txt";
+            var templateContent = Read(appServiceIntercafeClassDirectory);
+
+            StringBuilder sb = new StringBuilder();
+
+            foreach (var item in metaTableInfoList)
+            {
+                sb.AppendLine("<div class=\"form - group \">");
+                sb.AppendLine("  <input class=\"form - control@(Model." + item.Name + ".IsNullOrEmpty() ? \"\" : \" edited\")");
+                sb.AppendLine("type=\"text\" name=\"" + item.Name + "\"");
+                sb.AppendLine("value=\"@Model." + item.Name + "\"");
+                sb.AppendLine("</div> ");
+            }
+            var property_Looped_Template_Here = sb.ToString();
+
+            templateContent = templateContent.Replace("{{Namespace_Here}}", Configuration.Namespace_Here)
+                                             .Replace("{{Namespace_Relative_Full_Here}}", className)
+                                             .Replace("{{Entity_Name_Plural_Here}}", className)
+                                             .Replace("{{Entity_Name_Here}}", className)
+                                             .Replace("{{App_Area_Name_Here}}", Configuration.App_Area_Name)
+                                             .Replace("{{Property_Looped_Template_Here}}", property_Looped_Template_Here)
+                                             .Replace("{{entity_Name_Plural_Here}}", GetFirstToLowerStr(className))
+                                             ;
+            Write(Configuration.Web_Mvc_Directory + "Areas\\Admin\\Views\\" + className + "\\", "CreateOrEditModal.cshtml", templateContent);
+        }
+
+
+        /// <summary>
+        /// 生成CreateOrEditJs
+        /// </summary>
+        /// <param name="className"></param>
+        public static void SetCreateOrEditJs(string className, string primary_Key_Here)
+        {
+            string appServiceIntercafeClassDirectory = Configuration.RootDirectory + @"\Client\Mvc\CreateOrEditJs\MainTemplate.txt";
             var templateContent = Read(appServiceIntercafeClassDirectory);
 
             templateContent = templateContent.Replace("{{Namespace_Here}}", Configuration.Namespace_Here)
                                              .Replace("{{Namespace_Relative_Full_Here}}", className)
                                              .Replace("{{Entity_Name_Plural_Here}}", className)
                                              .Replace("{{Entity_Name_Here}}", className)
-                                             .Replace("{{Permission_Name_Here}}", $"Pages_Administration_{className}")
-                                             .Replace("{{App_Area_Name_Here}}", Configuration.App_Area_Name)
-                                             .Replace("{{Primary_Key_Here}}", primary_Key_Here)
-                                             .Replace("{{Project_Name_Here}}", Configuration.Controller_Base_Class)
                                              .Replace("{{entity_Name_Plural_Here}}", GetFirstToLowerStr(className))
                                              ;
-            Write(Configuration.Web_Mvc_Directory + "Areas\\Admin\\Views\\" + className + "\\", "CreateOrEditModal.cshtml", templateContent);
+            Write(Configuration.Web_Mvc_Directory + "\\wwwroot\\view-resources\\Areas\\Admin\\Views\\" + className + "\\", "_CreateOrEditModal.js", templateContent);
         }
+
+
+
+        /// <summary>
+        /// 生成CreateOrEditViewModelClass
+        /// </summary>
+        /// <param name="className"></param>
+        public static void SetCreateOrEditViewModelClass(string className)
+        {
+            string appServiceIntercafeClassDirectory = Configuration.RootDirectory + @"\Client\Mvc\CreateOrEditViewModelClass\MainTemplate.txt";
+            var templateContent = Read(appServiceIntercafeClassDirectory);
+            templateContent = templateContent.Replace("{{Namespace_Here}}", Configuration.Namespace_Here)
+                                             .Replace("{{Namespace_Relative_Full_Here}}", className)
+                                             .Replace("{{Entity_Name_Plural_Here}}", className)
+                                             .Replace("{{Entity_Name_Here}}", className)
+                                             .Replace("{{App_Area_Name_Here}}", Configuration.App_Area_Name)
+                                             ;
+            Write(Configuration.Web_Mvc_Directory + "Areas\\Admin\\Models\\" + className + "\\", "CreateOrEdit" + className + "ModalViewModel.cs", templateContent);
+        }
+
+
+        /// <summary>
+        /// 生成IndexHtmlTemplate
+        /// </summary>
+        /// <param name="className"></param>
+        public static void SetIndexHtmlTemplate(string className, List<MetaTableInfo> metaTableInfoList)
+        {
+            string appServiceIntercafeClassDirectory = Configuration.RootDirectory + @"\Client\Mvc\IndexHtmlTemplate\MainTemplate.txt";
+            var templateContent = Read(appServiceIntercafeClassDirectory);
+
+            StringBuilder sb = new StringBuilder();
+
+            foreach (var item in metaTableInfoList)
+            {
+                sb.AppendLine(" <th>@L(\"" + item.Annotation + "\")</th>");
+            }
+            var property_Looped_Template_Here = sb.ToString();
+
+            templateContent = templateContent.Replace("{{Namespace_Here}}", Configuration.Namespace_Here)
+                                             .Replace("{{Entity_Name_Plural_Here}}", className)
+                                             .Replace("{{Entity_Name_Here}}", className)
+                                             .Replace("{{App_Area_Name_Here}}", Configuration.App_Area_Name)
+                                             .Replace("{{Property_Looped_Template_Here}}", property_Looped_Template_Here)
+                                             ;
+            Write(Configuration.Web_Mvc_Directory + "Areas\\Admin\\Views\\" + className + "\\", "Index.cshtml", templateContent);
+        }
+
+
+        /// <summary>
+        /// 生成IndexJsTemplate
+        /// </summary>
+        /// <param name="className"></param>
+        public static void SetIndexJsTemplate(string className, string primary_Key_Here)
+        {
+            string appServiceIntercafeClassDirectory = Configuration.RootDirectory + @"\Client\Mvc\IndexJsTemplate\MainTemplate.txt";
+            var templateContent = Read(appServiceIntercafeClassDirectory);
+
+            templateContent = templateContent                                          
+                                             .Replace("{{Entity_Name_Plural_Here}}", className)
+                                             .Replace("{{Entity_Name_Here}}", className)
+                                             .Replace("{{entity_Name_Plural_Here}}", GetFirstToLowerStr(className))
+                                             ;
+            Write(Configuration.Web_Mvc_Directory + "\\wwwroot\\view-resources\\Areas\\Admin\\Views\\" + className + "\\", "Index.js", templateContent);
+        }
+
         #endregion
 
 
