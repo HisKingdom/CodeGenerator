@@ -9,10 +9,7 @@ namespace AbpCodeGenerator.Lib
 {
     public class MetaTableInfo
     {
-        /// <summary>
-        /// 读取的程序集路径 需换成自己项目的下的程序集路径
-        /// </summary>
-        private const string SourceAssembly = @"D:\Project\Tteb\Tteb.Core\bin\Debug\Tteb.Core.dll";
+    
 
         /// <summary>
         /// 属性名称
@@ -33,7 +30,7 @@ namespace AbpCodeGenerator.Lib
         {
 
             var list = new List<MetaTableInfo>();
-            Type[] types = Assembly.LoadFrom(SourceAssembly).GetTypes();
+            Type[] types = Assembly.LoadFrom(Configuration.SourceAssembly).GetTypes();
             foreach (var type in types)
             {
                 if (type.Name.Equals(className))

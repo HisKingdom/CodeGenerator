@@ -7,20 +7,7 @@ namespace AbpCodeGenerator.Lib
 {
     public class CodeGeneratorHelper
     {
-        /// <summary>
-        /// 根目录 读取模板的路径
-        /// </summary>
-        private const string rootDirectory = @"D:\Test\AbpCodeGenerator\AbpCodeGenerator\FileTemplates";
-
-        /// <summary>
-        /// 程序集名称
-        /// </summary>
-        private const string Namespace_Here = "ZhouDaFu.XinYunFen";
-
-        /// <summary>
-        /// Application文件目录
-        /// </summary>
-        private const string Application_Directory = @"D:\Project\保费零息贷\ZhouDaFu.XinYunFen\src\ZhouDaFu.XinYunFen.Application\";
+       
         #region client
 
         #endregion
@@ -34,16 +21,16 @@ namespace AbpCodeGenerator.Lib
         /// <param name="Primary_Key_Inside_Tag_Here">主键类型</param>
         public static void SetAppServiceIntercafeClass(string className, string Primary_Key_Inside_Tag_Here)
         {
-            string appServiceIntercafeClassDirectory = rootDirectory + @"\Server\AppServiceIntercafeClass\MainTemplate.txt";
+            string appServiceIntercafeClassDirectory = Configuration.RootDirectory + @"\Server\AppServiceIntercafeClass\MainTemplate.txt";
             var templateContent = Read(appServiceIntercafeClassDirectory);
 
-            templateContent = templateContent.Replace("{{Namespace_Here}}", Namespace_Here)
+            templateContent = templateContent.Replace("{{Namespace_Here}}", Configuration.Namespace_Here)
                                              .Replace("{{Namespace_Relative_Full_Here}}", className)
                                              .Replace("{{Entity_Name_Plural_Here}}", className)
                                              .Replace("{{Entity_Name_Here}}", className)
                                              .Replace("{{Primary_Key_Inside_Tag_Here}}", Primary_Key_Inside_Tag_Here)
                                              ;
-            Write(Application_Directory + className + "\\", "I" + className + "AppService.cs", templateContent);
+            Write(Configuration.Application_Directory + className + "\\", "I" + className + "AppService.cs", templateContent);
         }
 
         /// <summary>
@@ -53,14 +40,14 @@ namespace AbpCodeGenerator.Lib
         /// <param name="Primary_Key_Inside_Tag_Here">主键类型</param>
         public static void SetAppServiceClass(string className, string Primary_Key_Inside_Tag_Here)
         {
-            string appServiceIntercafeClassDirectory = rootDirectory + @"\Server\AppServiceClass\MainTemplate.txt";
+            string appServiceIntercafeClassDirectory = Configuration.RootDirectory + @"\Server\AppServiceClass\MainTemplate.txt";
             var templateContent = Read(appServiceIntercafeClassDirectory);
             var Primary_Key_With_Comma_Here = Primary_Key_Inside_Tag_Here;
             if (Primary_Key_Inside_Tag_Here != "int")
             {
                 Primary_Key_With_Comma_Here = "," + Primary_Key_Inside_Tag_Here;
             }
-            templateContent = templateContent.Replace("{{Namespace_Here}}", Namespace_Here)
+            templateContent = templateContent.Replace("{{Namespace_Here}}", Configuration.Namespace_Here)
                                              .Replace("{{Namespace_Relative_Full_Here}}", className)
                                              .Replace("{{Entity_Name_Plural_Here}}", className)
                                              .Replace("{{Entity_Name_Here}}", className)
@@ -70,7 +57,7 @@ namespace AbpCodeGenerator.Lib
                                              .Replace("{{Project_Name_Here}}", $"XinYunFen")//这里需要改成自己项目的父类
                                              .Replace("{{Primary_Key_With_Comma_Here}}", Primary_Key_With_Comma_Here)
                                              ;
-            Write(Application_Directory + className + "\\", className + "AppService.cs", templateContent);
+            Write(Configuration.Application_Directory + className + "\\", className + "AppService.cs", templateContent);
         }
         #endregion
 
@@ -85,7 +72,7 @@ namespace AbpCodeGenerator.Lib
         /// <param name="Primary_Key_Inside_Tag_Here">主键类型</param>
         public static void SetCreateOrEditInputClass(string className, List<MetaTableInfo> metaTableInfoList)
         {
-            string appServiceIntercafeClassDirectory = rootDirectory + @"\Server\Dtos\CreateOrEditInputClass\MainTemplate.txt";
+            string appServiceIntercafeClassDirectory = Configuration.RootDirectory + @"\Server\Dtos\CreateOrEditInputClass\MainTemplate.txt";
             var templateContent = Read(appServiceIntercafeClassDirectory);
             StringBuilder sb = new StringBuilder();
 
@@ -97,12 +84,12 @@ namespace AbpCodeGenerator.Lib
                 sb.AppendLine("public " + item.PropertyType + " " + item.Name + " { get; set; }");
             }
             var property_Looped_Template_Here = sb.ToString();
-            templateContent = templateContent.Replace("{{Namespace_Here}}", Namespace_Here)
+            templateContent = templateContent.Replace("{{Namespace_Here}}", Configuration.Namespace_Here)
                                              .Replace("{{Namespace_Relative_Full_Here}}", className)
                                              .Replace("{{Entity_Name_Here}}", className)
                                              .Replace("{{Property_Looped_Template_Here}}", property_Looped_Template_Here)
                                              ;
-            Write(Application_Directory + className + "\\Dtos\\", "CreateOrEdit" + className + "Dto.cs", templateContent);
+            Write(Configuration.Application_Directory + className + "\\Dtos\\", "CreateOrEdit" + className + "Dto.cs", templateContent);
         }
 
         #endregion
