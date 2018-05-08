@@ -7,7 +7,7 @@ namespace AbpCodeGenerator.Lib
 {
     public class CodeGeneratorHelper
     {
-       
+
         #region client
 
         #endregion
@@ -53,7 +53,7 @@ namespace AbpCodeGenerator.Lib
                                              .Replace("{{Entity_Name_Here}}", className)
                                              .Replace("{{Primary_Key_Inside_Tag_Here}}", Primary_Key_Inside_Tag_Here)
                                              .Replace("{{entity_Name_Here}}", GetFirstToLowerStr(className))
-                                             .Replace("{{Permission_Name_Here}}", $"Pages_Administration_{className}s")
+                                             .Replace("{{Permission_Name_Here}}", $"Pages_Administration_{className}")
                                              .Replace("{{Project_Name_Here}}", $"XinYunFen")//这里需要改成自己项目的父类
                                              .Replace("{{Primary_Key_With_Comma_Here}}", Primary_Key_With_Comma_Here)
                                              ;
@@ -66,10 +66,73 @@ namespace AbpCodeGenerator.Lib
         #region Dtos
 
         /// <summary>
-        /// 生成接口实现类信息
+        /// 生成GetInputClass
         /// </summary>
         /// <param name="className"></param>
-        /// <param name="Primary_Key_Inside_Tag_Here">主键类型</param>
+        public static void SetGetInputClass(string className)
+        {
+            string appServiceIntercafeClassDirectory = Configuration.RootDirectory + @"\Server\Dtos\GetInputClass\MainTemplate.txt";
+            var templateContent = Read(appServiceIntercafeClassDirectory);
+
+            templateContent = templateContent.Replace("{{Namespace_Here}}", Configuration.Namespace_Here)
+                                             .Replace("{{Namespace_Relative_Full_Here}}", className)
+                                             .Replace("{{Entity_Name_Here}}", className)
+                                             ;
+            Write(Configuration.Application_Directory + className + "\\Dtos\\", "Get" + className + "Input.cs", templateContent);
+        }
+
+
+        /// <summary>
+        /// 生成GetForEditOutputClass
+        /// </summary>
+        /// <param name="className"></param>
+        public static void SetGetForEditOutputClass(string className)
+        {
+            string appServiceIntercafeClassDirectory = Configuration.RootDirectory + @"\Server\Dtos\GetForEditOutputClass\MainTemplate.txt";
+            var templateContent = Read(appServiceIntercafeClassDirectory);
+
+            templateContent = templateContent.Replace("{{Namespace_Here}}", Configuration.Namespace_Here)
+                                             .Replace("{{Namespace_Relative_Full_Here}}", className)
+                                             .Replace("{{Entity_Name_Here}}", className)
+                                             ;
+            Write(Configuration.Application_Directory + className + "\\Dtos\\", "Get" + className + "ForEditOutput.cs", templateContent);
+        }
+
+
+        /// <summary>
+        /// 生成ListDtoClass
+        /// </summary>
+        /// <param name="className"></param>
+        /// <param name="metaTableInfoList"></param>
+        public static void SetListDtoClass(string className, List<MetaTableInfo> metaTableInfoList)
+        {
+            string appServiceIntercafeClassDirectory = Configuration.RootDirectory + @"\Server\Dtos\ListDtoClass\MainTemplate.txt";
+            var templateContent = Read(appServiceIntercafeClassDirectory);
+            StringBuilder sb = new StringBuilder();
+
+            foreach (var item in metaTableInfoList)
+            {
+                sb.AppendLine("/// <summary>");
+                sb.AppendLine("/// " + item.Annotation);
+                sb.AppendLine("/// </summary>");
+                sb.AppendLine("public " + item.PropertyType + " " + item.Name + " { get; set; }");
+                sb.AppendLine("     ");
+            }
+            var property_Looped_Template_Here = sb.ToString();
+            templateContent = templateContent.Replace("{{Namespace_Here}}", Configuration.Namespace_Here)
+                                             .Replace("{{Namespace_Relative_Full_Here}}", className)
+                                             .Replace("{{Entity_Name_Here}}", className)
+                                             .Replace("{{Property_Looped_Template_Here}}", property_Looped_Template_Here)
+                                             ;
+            Write(Configuration.Application_Directory + className + "\\Dtos\\", className + "ListDto.cs", templateContent);
+        }
+
+
+        /// <summary>
+        /// 生成CreateOrEditInput
+        /// </summary>
+        /// <param name="className"></param>
+        /// <param name="metaTableInfoList"></param>
         public static void SetCreateOrEditInputClass(string className, List<MetaTableInfo> metaTableInfoList)
         {
             string appServiceIntercafeClassDirectory = Configuration.RootDirectory + @"\Server\Dtos\CreateOrEditInputClass\MainTemplate.txt";
@@ -82,6 +145,7 @@ namespace AbpCodeGenerator.Lib
                 sb.AppendLine("/// " + item.Annotation);
                 sb.AppendLine("/// </summary>");
                 sb.AppendLine("public " + item.PropertyType + " " + item.Name + " { get; set; }");
+                sb.AppendLine("     ");
             }
             var property_Looped_Template_Here = sb.ToString();
             templateContent = templateContent.Replace("{{Namespace_Here}}", Configuration.Namespace_Here)
@@ -89,7 +153,23 @@ namespace AbpCodeGenerator.Lib
                                              .Replace("{{Entity_Name_Here}}", className)
                                              .Replace("{{Property_Looped_Template_Here}}", property_Looped_Template_Here)
                                              ;
-            Write(Configuration.Application_Directory + className + "\\Dtos\\", "CreateOrEdit" + className + "Dto.cs", templateContent);
+            Write(Configuration.Application_Directory + className + "\\Dtos\\", "CreateOrEdit" + className + "Input.cs", templateContent);
+        }
+
+
+        /// <summary>
+        /// 生成ConstsClass
+        /// </summary>
+        /// <param name="className"></param>
+        public static void SetConstsClass(string className)
+        {
+            string appServiceIntercafeClassDirectory = Configuration.RootDirectory + @"\Server\ConstsClass\MainTemplate.txt";
+            var templateContent = Read(appServiceIntercafeClassDirectory);
+        
+            templateContent = templateContent.Replace("{{entity_Name_Here}}", GetFirstToLowerStr(className))
+                                             .Replace("{{Entity_Name_Here}}", className)
+                                             ;
+            Write(Configuration.Application_Directory + className + "\\", className + "ConstsClass.txt", templateContent);
         }
 
         #endregion

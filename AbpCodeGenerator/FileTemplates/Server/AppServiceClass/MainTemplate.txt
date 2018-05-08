@@ -18,48 +18,48 @@ namespace {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}
     {
 		 private readonly IRepository<{{Entity_Name_Here}}{{Primary_Key_With_Comma_Here}}> _{{entity_Name_Here}}Repository;
 
-		  public {{Entity_Name_Plural_Here}}AppService(IRepository<{{Entity_Name_Here}}{{Primary_Key_With_Comma_Here}}> {{entity_Name_Here}}Repository {{NP_Looped_Ctor_Parameter_Here}}) 
+		  public {{Entity_Name_Plural_Here}}AppService(IRepository<{{Entity_Name_Here}}{{Primary_Key_With_Comma_Here}}> {{entity_Name_Here}}Repository) 
 		  {
 			_{{entity_Name_Here}}Repository = {{entity_Name_Here}}Repository;
 		  }
 
-		 public async Task<PagedResultDto<GetAll{{Entity_Name_Plural_Here}}Output>> GetAll(GetAll{{Entity_Name_Plural_Here}}Input input)
+		private IQueryable<{{Entity_Name_Here}}> Create{{Entity_Name_Here}}Query(Get{{Entity_Name_Here}}Input input)
+        {
+            var query = from {{entity_Name_Here}} in _{{entity_Name_Here}}Repository.GetAll()
+                select {{entity_Name_Here}};
+
+            //query = query
+            //    .WhereIf(!input.Filter.IsNullOrWhiteSpace(), item => item.Filter.Contains(input.Filter))
+            return query;
+        }
+
+		 public async Task<PagedResultDto<{{Entity_Name_Here}}ListDto>> GetAll(Get{{Entity_Name_Here}}Input input)
          {
-			var query = (from o in _{{entity_Name_Here}}Repository.GetAll()
-                         {{NP_Looped_Query_Join_Here}}
-                         select new GetAll{{Entity_Name_Plural_Here}}Output() { {{Entity_Name_Here}} = ObjectMapper.Map<{{Entity_Name_Here}}Dto>(o)
-						 {{NP_Looped_Map_Join_Here}}
-						 })
-						 .WhereIf(
-							!string.IsNullOrWhiteSpace(input.Filter),
-						    e => false {{Property_Looped_Template_Here}}
-							);
 
-            var totalCount = await query.CountAsync();
+			var query = Create{{Entity_Name_Here}}Query(input);
 
-            var {{entity_Name_Plural_Here}} = await query
-                .OrderBy(input.Sorting ?? "{{entity_Name_Here}}.id asc")
+            var resultCount = await query.CountAsync();
+            var results = await query
+                .OrderBy(input.Sorting)
                 .PageBy(input)
                 .ToListAsync();
 
-            return new PagedResultDto<GetAll{{Entity_Name_Plural_Here}}Output>(
-                totalCount,
-                {{entity_Name_Plural_Here}}
-            );
+            var {{entity_Name_Here}}ListDtos =  ObjectMapper.Map<List<{{Entity_Name_Here}}ListDto>>(results);;
+
+            return new PagedResultDto<{{Entity_Name_Here}}ListDto>(resultCount, {{entity_Name_Here}}ListDtos);
          }
 		 
 		 [AbpAuthorize(AppPermissions.{{Permission_Name_Here}}_Edit)]
 		 public async Task<Get{{Entity_Name_Here}}ForEditOutput> Get{{Entity_Name_Here}}ForEdit(EntityDto<{{Primary_Key_Inside_Tag_Here}}> input)
          {
             var {{entity_Name_Here}} = await _{{entity_Name_Here}}Repository.FirstOrDefaultAsync(input.Id);
-            var output = new Get{{Entity_Name_Here}}ForEditOutput {{{Entity_Name_Here}} = ObjectMapper.Map<CreateOrEdit{{Entity_Name_Here}}Dto>({{entity_Name_Here}})};
+            var output = new Get{{Entity_Name_Here}}ForEditOutput {{{Entity_Name_Here}} = ObjectMapper.Map<CreateOrEdit{{Entity_Name_Here}}Input>({{entity_Name_Here}})};
 
-			{{NP_Loop_Include_In_Get_Here}}
 			
             return output;
          }
 
-		 public async Task CreateOrEdit(CreateOrEdit{{Entity_Name_Here}}Dto input)
+		 public async Task CreateOrEdit(CreateOrEdit{{Entity_Name_Here}}Input input)
          {
             if(input.Id == null){
 				await Create(input);
@@ -70,19 +70,18 @@ namespace {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}
          }
 
 		 [AbpAuthorize(AppPermissions.{{Permission_Name_Here}}_Create)]
-		 private async Task Create(CreateOrEdit{{Entity_Name_Here}}Dto input)
+		 private async Task Create(CreateOrEdit{{Entity_Name_Here}}Input input)
          {
             var {{entity_Name_Here}} = ObjectMapper.Map<{{Entity_Name_Here}}>(input);
 
-			{{Set_Tenant_Id_Here}}
 
             await _{{entity_Name_Here}}Repository.InsertAsync({{entity_Name_Here}});
          }
 
 		 [AbpAuthorize(AppPermissions.{{Permission_Name_Here}}_Edit)]
-		 private async Task Update(CreateOrEdit{{Entity_Name_Here}}Dto input)
+		 private async Task Update(CreateOrEdit{{Entity_Name_Here}}Input input)
          {
-            var {{entity_Name_Here}} = await _{{entity_Name_Here}}Repository.FirstOrDefaultAsync(({{Primary_Key_Here}})input.Id);
+            var {{entity_Name_Here}} = await _{{entity_Name_Here}}Repository.FirstOrDefaultAsync(input.Id);
              ObjectMapper.Map(input, {{entity_Name_Here}});
          }
 

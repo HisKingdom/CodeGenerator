@@ -4,9 +4,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}.Dtos
 {
-    public class Get{{Entity_Name_Here}}ForEditOutput
+    public class {{Entity_Name_Here}}ListDto 
     {
-		public CreateOrEdit{{Entity_Name_Here}}Input {{Entity_Name_Here}} { get; set; }
-
+       {{Property_Looped_Template_Here}}
     }
 }

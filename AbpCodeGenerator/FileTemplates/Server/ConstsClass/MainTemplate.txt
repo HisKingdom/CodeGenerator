@@ -1,7 +1,15 @@
-﻿namespace {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}
-{
-    public class {{Entity_Name_Here}}Consts
-    {
-{{Property_Looped_Template_Here}}
-    }
-}
+﻿
+        public const string Pages_Administration_{{Entity_Name_Here}} = "Pages.Administration.{{Entity_Name_Here}}";
+        public const string Pages_Administration_{{Entity_Name_Here}}_Create = "Pages.Administration.{{Entity_Name_Here}}.Create";
+        public const string Pages_Administration_{{Entity_Name_Here}}_Edit = "Pages.Administration.{{Entity_Name_Here}}.Edit";
+        public const string Pages_Administration_{{Entity_Name_Here}}_Delete = "Pages.Administration.{{Entity_Name_Here}}.Delete";
+      
+	    var {{entity_Name_Here}} = administration.CreateChildPermission(AppPermissions.Pages_Administration_{{Entity_Name_Here}}, L("{{Entity_Name_Here}}"));
+            {{entity_Name_Here}}.CreateChildPermission(AppPermissions.Pages_Administration_{{Entity_Name_Here}}_Create, L("CreatingNew{{Entity_Name_Here}}"));
+            {{entity_Name_Here}}.CreateChildPermission(AppPermissions.Pages_Administration_{{Entity_Name_Here}}_Edit, L("Editing{{Entity_Name_Here}}"));
+            {{entity_Name_Here}}.CreateChildPermission(AppPermissions.Pages_Administration_{{Entity_Name_Here}}_Delete, L("Deleting{{Entity_Name_Here}}"));
+
+	<text name="{{Entity_Name_Here}}"></text>
+    <text name="CreatingNew{{Entity_Name_Here}}">创建</text>
+	<text name="Editing{{Entity_Name_Here}}">编辑</text>
+    <text name="Deleting{{Entity_Name_Here}}">删除</text>

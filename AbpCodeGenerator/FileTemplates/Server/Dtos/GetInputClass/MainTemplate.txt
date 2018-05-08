@@ -1,0 +1,19 @@
+﻿using Abp.Application.Services.Dto;
+using Abp.Runtime.Validation;
+using {{Namespace_Here}}.Dto;
+
+namespace {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}.Dtos
+{
+    public class Get{{Entity_Name_Here}}Input : PagedAndSortedInputDto, IShouldNormalize
+    {
+		public string Filter { get; set; }
+
+		public void Normalize()
+        {
+            if (string.IsNullOrEmpty(Sorting))
+            {
+                Sorting = "Name,Surname";
+            }
+        }
+    }
+}

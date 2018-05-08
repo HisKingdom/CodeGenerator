@@ -19,15 +19,21 @@ namespace AbpCodeGenerator
             //var metaTableInfoList = MetaTableInfo.GetMetaTableInfoListForMysql(tableName);
 
             //程序集
-            string className = "Usert";
+            string className = "Order";
             var metaTableInfoList = MetaTableInfo.GetMetaTableInfoListForAssembly(className);
 
             //得到主键类型
             var propertyType = metaTableInfoList.FirstOrDefault(m => m.Name == "Id").PropertyType;
             // 生成接口信息相关代码
             CodeGeneratorHelper.SetAppServiceIntercafeClass(className, propertyType);
-            //CodeGeneratorHelper.SetAppServiceClass(className, propertyType);
+            CodeGeneratorHelper.SetAppServiceClass(className, propertyType);
             CodeGeneratorHelper.SetCreateOrEditInputClass(className, metaTableInfoList);
+            CodeGeneratorHelper.SetGetForEditOutputClass(className);
+            CodeGeneratorHelper.SetGetInputClass(className);
+            CodeGeneratorHelper.SetListDtoClass(className, metaTableInfoList);
+            CodeGeneratorHelper.SetCreateOrEditInputClass(className, metaTableInfoList);
+            CodeGeneratorHelper.SetConstsClass(className);
+            
         }
 
 
