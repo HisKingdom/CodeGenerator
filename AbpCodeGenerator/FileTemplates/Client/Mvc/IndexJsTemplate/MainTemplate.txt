@@ -46,7 +46,7 @@
                                 return _permissions.edit;
                             },
                             action: function (data) {
-                                _createOrEditModal.open({ id: data.record.{{entity_Name_Here}}.id });
+                                _createOrEditModal.open({ id: data.record.id });
                             }
                         }, {
                             text: app.localize('Delete'),
