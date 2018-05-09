@@ -54,7 +54,7 @@
                                 return _permissions.delete;
                             },
                             action: function (data) {
-                                delete{{Entity_Name_Here}}(data.record.{{entity_Name_Here}});
+                                delete{{Entity_Name_Here}}(data.record);
                             }
                         }]
                     }

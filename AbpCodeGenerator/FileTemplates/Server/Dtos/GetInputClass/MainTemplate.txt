@@ -12,7 +12,7 @@ namespace {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}s.Dtos
         {
             if (string.IsNullOrEmpty(Sorting))
             {
-                Sorting = "Name,Surname";
+                Sorting = "Id";
             }
         }
     }

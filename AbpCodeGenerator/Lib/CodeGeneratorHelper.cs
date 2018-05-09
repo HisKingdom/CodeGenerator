@@ -46,7 +46,7 @@ namespace AbpCodeGenerator.Lib
             foreach (var item in metaTableInfoList)
             {
                 sb.AppendLine("<div class=\"form-group \">");
-                if (item.PropertyType=="string")
+                if (item.PropertyType == "string")
                 {
                     sb.AppendLine("  <input class=\"form-control@(Model." + className + "." + item.Name + ".IsNullOrEmpty() ? \"\" : \" edited\")\"");
                 }
@@ -54,7 +54,7 @@ namespace AbpCodeGenerator.Lib
                 {
                     sb.AppendLine("  <input class=\"form-control\"");
                 }
-     
+
                 sb.AppendLine("type=\"text\" name=\"" + item.Name + "\"");
                 sb.AppendLine("value=\"@Model." + className + "." + item.Name + "\" />");
                 sb.AppendLine("</div> ");
@@ -69,7 +69,7 @@ namespace AbpCodeGenerator.Lib
                                              .Replace("{{Property_Looped_Template_Here}}", property_Looped_Template_Here)
                                              .Replace("{{entity_Name_Plural_Here}}", GetFirstToLowerStr(className))
                                              ;
-            Write(Configuration.Web_Mvc_Directory + "Areas\\Admin\\Views\\" + className + "\\", "CreateOrEditModal.cshtml", templateContent);
+            Write(Configuration.Web_Mvc_Directory + "Areas\\Admin\\Views\\" + className + "\\", "_CreateOrEditModal.cshtml", templateContent);
         }
 
 
@@ -155,7 +155,7 @@ namespace AbpCodeGenerator.Lib
             {
                 sb.AppendLine(", {");
                 sb.AppendLine("targets: " + i + ",");
-                sb.AppendLine("data: \"" + item.Name + "\"");
+                sb.AppendLine("data: \"" + GetFirstToLowerStr(item.Name) + "\"");
                 sb.AppendLine("}");
                 i++;
             }

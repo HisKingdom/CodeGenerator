@@ -24,12 +24,12 @@ namespace {{Namespace_Here}}.Web.Areas.{{App_Area_Name_Here}}.Controllers
 
         public ActionResult Index()
         {
-            var model = new {{Entity_Name_Plural_Here}}ViewModel
-			{
-				FilterText = ""
-			};
+            // var model = new {{Entity_Name_Plural_Here}}ViewModel
+			//{
+			//	FilterText = ""
+			//};
 
-            return View(model);
+            return View();
         }
 
         [AbpMvcAuthorize(AppPermissions.{{Permission_Name_Here}}_Create, AppPermissions.{{Permission_Name_Here}}_Edit)]
@@ -38,11 +38,11 @@ namespace {{Namespace_Here}}.Web.Areas.{{App_Area_Name_Here}}.Controllers
 			Get{{Entity_Name_Here}}ForEditOutput get{{Entity_Name_Here}}ForEditOutput;
 
 			if (id.HasValue){
-				get{{Entity_Name_Here}}ForEditOutput = await _{{entity_Name_Plural_Here}}AppService.Get{{Entity_Name_Here}}ForEdit(new EntityDto<{{Primary_Key_Here}}> { Id =  id });
+				get{{Entity_Name_Here}}ForEditOutput = await _{{entity_Name_Plural_Here}}AppService.Get{{Entity_Name_Here}}ForEdit(new EntityDto<{{Primary_Key_Here}}> { Id =  id.Value });
 			}
 			else{
 				get{{Entity_Name_Here}}ForEditOutput = new Get{{Entity_Name_Here}}ForEditOutput{
-					{{Entity_Name_Here}} = new CreateOrEdit{{Entity_Name_Here}}Dto()
+					{{Entity_Name_Here}} = new CreateOrEdit{{Entity_Name_Here}}Input()
 				};
 			}
 

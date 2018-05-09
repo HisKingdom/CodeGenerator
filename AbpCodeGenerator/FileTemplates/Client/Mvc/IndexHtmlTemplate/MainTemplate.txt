@@ -35,7 +35,7 @@
                     <div class="col-xl-12">
                         <div class="form-group m-form__group align-items-center">
                             <div class="input-group">
-                                <input type="text" id="{{Entity_Name_Plural_Here}}TableFilter" class="form-control m-input" placeholder="@L("SearchWithThreeDot")" value="@Model.FilterText">
+                                <input type="text" id="{{Entity_Name_Plural_Here}}TableFilter" class="form-control m-input" placeholder="@L("SearchWithThreeDot")" >
                                 <span class="input-group-btn">
                                     <button id="Get{{Entity_Name_Plural_Here}}Button" class="btn btn-primary" type="submit"><i class="flaticon-search-1"></i></button>
                                 </span>

@@ -6,7 +6,7 @@
         var _modalManager;
         var _${{entity_Name_Here}}InformationForm = null;
 
-		{{NP_Modal_Init_Here}}
+	
 
         this.init = function (modalManager) {
             _modalManager = modalManager;

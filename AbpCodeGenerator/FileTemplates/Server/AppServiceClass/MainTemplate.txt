@@ -81,7 +81,7 @@ namespace {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}s
 		 [AbpAuthorize(AppPermissions.{{Permission_Name_Here}}_Edit)]
 		 private async Task Update(CreateOrEdit{{Entity_Name_Here}}Input input)
          {
-            var {{entity_Name_Here}} = await _{{entity_Name_Here}}Repository.FirstOrDefaultAsync(input.Id);
+            var {{entity_Name_Here}} = await _{{entity_Name_Here}}Repository.FirstOrDefaultAsync(input.Id.Value);
              ObjectMapper.Map(input, {{entity_Name_Here}});
          }
 
