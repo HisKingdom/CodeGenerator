@@ -24,7 +24,7 @@ namespace AbpCodeGenerator
 
             //得到主键类型
             var propertyType = metaTableInfoList.FirstOrDefault(m => m.Name == "Id").PropertyType;
-            // 生成接口信息相关代码
+            // server端生成
             CodeGeneratorHelper.SetAppServiceIntercafeClass(className, propertyType);
             CodeGeneratorHelper.SetAppServiceClass(className, propertyType);
             CodeGeneratorHelper.SetCreateOrEditInputClass(className, metaTableInfoList);
