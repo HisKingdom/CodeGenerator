@@ -125,7 +125,7 @@ namespace AbpCodeGenerator.Lib
 
             foreach (var item in metaTableInfoList)
             {
-                sb.AppendLine(" <th>@L(\"" + item.Annotation + "\")</th>");
+                sb.AppendLine(" <th>" + item.Annotation + "</th>");
             }
             var property_Looped_Template_Here = sb.ToString();
 
