@@ -304,7 +304,7 @@ namespace AbpCodeGenerator.Lib
                 sb.AppendLine("/// <summary>");
                 sb.AppendLine("/// " + item.Annotation);
                 sb.AppendLine("/// </summary>");
-                sb.AppendLine("public " + item.PropertyType + " " + item.Name + " { get; set; }");
+                sb.AppendLine("public " + item.PropertyType + (item.Name == "Id" ? "? " : " ") + item.Name + " { get; set; }");
                 sb.AppendLine("     ");
             }
             var property_Looped_Template_Here = sb.ToString();

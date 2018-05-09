@@ -9,7 +9,7 @@
         <div id="{{Entity_Name_Here}}InformationsTab">
             <form name="{{Entity_Name_Here}}InformationsForm" role="form" novalidate class="form-validation">
 
-                @if (Model.{{Entity_Name_Here}}.IsEditMode)
+                @if (Model.IsEditMode)
                 {
                     <input type="hidden" name="id" value="@Model.{{Entity_Name_Here}}.Id" />
                 }
