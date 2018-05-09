@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Abp.Application.Services;
 using Abp.Application.Services.Dto;
 using {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}s.Dtos;
+using {{Namespace_Here}}.Dto;
 
 namespace {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}s
 {
@@ -15,6 +16,8 @@ namespace {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}s
 		Task CreateOrEdit(CreateOrEdit{{Entity_Name_Here}}Input input);
 
 		Task Delete(EntityDto<{{Primary_Key_Inside_Tag_Here}}> input);
+
+		Task<FileDto> Get{{Entity_Name_Here}}ToExcel(Get{{Entity_Name_Here}}Input input);
 
     }
 }

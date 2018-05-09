@@ -32,6 +32,8 @@ namespace AbpCodeGenerator
             CodeGeneratorHelper.SetGetInputClass(className);
             CodeGeneratorHelper.SetListDtoClass(className, metaTableInfoList);
             CodeGeneratorHelper.SetCreateOrEditInputClass(className, metaTableInfoList);
+            CodeGeneratorHelper.SetExportingIntercafeClass(className);
+            CodeGeneratorHelper.SetExportingClass(className, metaTableInfoList);
             CodeGeneratorHelper.SetConstsClass(className);
 
             //client

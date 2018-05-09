@@ -20,6 +20,7 @@
             </span>
         </div>
         <div class="col-sm-12 col-md-6 text-right">
+		    <button id="Export{{Entity_Name_Here}}ToExcelButton" class="btn btn-outline-success"><i class="fa fa-file-excel-o"></i> @L("ExportToExcel")</button>
             @if (IsGranted(AppPermissions.{{Permission_Name_Here}}_Create))
             {
                 <button id="CreateNew{{Entity_Name_Here}}Button" class="btn btn-primary blue"><i class="fa fa-plus"></i> @L("CreateNew{{Entity_Name_Here}}")</button>
@@ -45,7 +46,7 @@
                 </div>
 			</div>
             <div class="row align-items-center">
-                <table id="{{Entity_Name_Plural_Here}}Table" class="display table table-striped table-bordered table-hover dt-responsive nowrap">
+                <table id="MainTable" class="display table table-striped table-bordered table-hover dt-responsive nowrap">
                     <thead>
                         <tr>
                             <th>@L("Actions")</th>

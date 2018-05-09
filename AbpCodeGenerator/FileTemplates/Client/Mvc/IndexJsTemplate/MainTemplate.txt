@@ -1,7 +1,7 @@
 ﻿(function () {
     $(function () {
 
-        var _${{entity_Name_Plural_Here}}Table = $('#{{Entity_Name_Plural_Here}}Table');
+        var _${{entity_Name_Plural_Here}}Table = $('#MainTable');
         var _{{entity_Name_Plural_Here}}Service = abp.services.app.{{entity_Name_Plural_Here}};
 
         var _permissions = {
@@ -82,6 +82,14 @@
                 }
             );
         }
+
+		$('#Export{{Entity_Name_Here}}ToExcelButton').click(function () {
+            _{{entity_Name_Here}}Service
+                .get{{Entity_Name_Here}}ToExcel({})
+                .done(function (result) {
+                    app.downloadTempFile(result);
+                });
+        });
 
         $('#CreateNew{{Entity_Name_Here}}Button').click(function () {
             _createOrEditModal.open();

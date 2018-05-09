@@ -1,0 +1,61 @@
+﻿using System.Collections.Generic;
+using ZhouDaFu.XinYunFen.Orders.Dtos;
+using ZhouDaFu.XinYunFen.Authorization;
+using Abp.Authorization;
+using Abp.Timing.Timezone;
+using {{Namespace_Here}}.DataExporting.Excel.EpPlus;
+using {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}s.Exporting;
+using Abp.Runtime.Session;
+using {{Namespace_Here}}.Dto;
+
+namespace {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}s
+{
+	[AbpAuthorize(AppPermissions.{{Permission_Name_Here}})]
+    public class {{Entity_Name_Here}}ListExcelExporter : EpPlusExcelExporterBase, I{{Entity_Name_Here}}ListExcelExporter
+    {
+        private readonly ITimeZoneConverter _timeZoneConverter;
+        private readonly IAbpSession _abpSession;
+
+        public {{Entity_Name_Here}}ListExcelExporter(
+            ITimeZoneConverter timeZoneConverter,
+            IAbpSession abpSession)
+        {
+            _timeZoneConverter = timeZoneConverter;
+            _abpSession = abpSession;
+        }
+
+        public FileDto ExportToFile(List<{{Entity_Name_Here}}ListDto> {{entity_Name_Here}}ListDtos)
+        {
+            return CreateExcelPackage(
+                "{{Entity_Name_Here}}.xlsx",
+                excelPackage =>
+                {
+                    var sheet = excelPackage.Workbook.Worksheets.Add(L("{{Entity_Name_Here}}"));
+                    sheet.OutLineApplyStyle = true;
+
+                    AddHeader(
+                        sheet,
+                      {{Excel_Header}}
+                        );
+
+                    AddObjects(
+                        sheet, 2, {{entity_Name_Here}}ListDtos,
+                       {{Excel_Objects}}
+                        );
+
+                    //Formatting cells
+
+                    var lastLoginTimeColumn = sheet.Column(8);
+                    lastLoginTimeColumn.Style.Numberformat.Format = "yyyy-mm-dd";
+
+                    var creationTimeColumn = sheet.Column(10);
+                    creationTimeColumn.Style.Numberformat.Format = "yyyy-mm-dd";
+
+                    for (var i = 1; i <= 10; i++)
+                    {
+                        sheet.Column(i).AutoFit();
+                    }
+                });
+        }
+    }
+}

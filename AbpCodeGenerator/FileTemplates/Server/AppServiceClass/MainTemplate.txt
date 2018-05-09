@@ -10,6 +10,9 @@ using Abp.Application.Services.Dto;
 using {{Namespace_Here}}.Authorization;
 using Abp.Authorization;
 using Microsoft.EntityFrameworkCore;
+using {{Namespace_Here}}.Dto;
+using {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}s.Exporting;
+using {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}s.Entities;
 
 namespace {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}s
 {
@@ -17,10 +20,11 @@ namespace {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}s
     public class {{Entity_Name_Plural_Here}}AppService : {{Project_Name_Here}}AppServiceBase, I{{Entity_Name_Plural_Here}}AppService
     {
 		 private readonly IRepository<{{Entity_Name_Here}}{{Primary_Key_With_Comma_Here}}> _{{entity_Name_Here}}Repository;
-
-		  public {{Entity_Name_Plural_Here}}AppService(IRepository<{{Entity_Name_Here}}{{Primary_Key_With_Comma_Here}}> {{entity_Name_Here}}Repository) 
+		 private readonly I{{Entity_Name_Here}}ListExcelExporter _{{entity_Name_Here}}ListExcelExporter;
+		  public {{Entity_Name_Plural_Here}}AppService(IRepository<{{Entity_Name_Here}}{{Primary_Key_With_Comma_Here}}> {{entity_Name_Here}}Repository, I{{Entity_Name_Here}}ListExcelExporter {{entity_Name_Here}}ListExcelExporter) 
 		  {
 			_{{entity_Name_Here}}Repository = {{entity_Name_Here}}Repository;
+			_{{entity_Name_Here}}ListExcelExporter = {{entity_Name_Here}}ListExcelExporter;
 		  }
 
 		private IQueryable<{{Entity_Name_Here}}> Create{{Entity_Name_Here}}Query(Get{{Entity_Name_Here}}Input input)
@@ -90,6 +94,21 @@ namespace {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}s
          {
             await _{{entity_Name_Here}}Repository.DeleteAsync(input.Id);
          }
+
+		 public async Task<FileDto> Get{{Entity_Name_Here}}ToExcel(Get{{Entity_Name_Here}}Input input)
+         {
+
+			var query = Create{{Entity_Name_Here}}Query(input);
+
+            var results = await query
+                .OrderBy(input.Sorting)
+                .ToListAsync();
+
+            var {{entity_Name_Here}}ListDtos =  ObjectMapper.Map<List<{{Entity_Name_Here}}ListDto>>(results);;
+            return _{{entity_Name_Here}}ListExcelExporter.ExportToFile({{entity_Name_Here}}ListDtos);
+         }
+
+	  
 
     }
 }

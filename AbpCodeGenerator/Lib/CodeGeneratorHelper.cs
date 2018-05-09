@@ -222,6 +222,51 @@ namespace AbpCodeGenerator.Lib
             Write(Configuration.Application_Directory + className + "s\\", className + "AppService.cs", templateContent);
         }
 
+        /// <summary>
+        /// 生成Exporting接口信息
+        /// </summary>
+        /// <param name="className"></param>
+        /// <param name="primary_Key_Inside_Tag_Here">主键类型</param>
+        public static void SetExportingIntercafeClass(string className)
+        {
+            string appServiceIntercafeClassDirectory = Configuration.RootDirectory + @"\Server\ExportingIntercafeClass\MainTemplate.txt";
+            var templateContent = Read(appServiceIntercafeClassDirectory);
+
+            templateContent = templateContent.Replace("{{Namespace_Here}}", Configuration.Namespace_Here)
+                                             .Replace("{{Namespace_Relative_Full_Here}}", className)
+                                             .Replace("{{Entity_Name_Plural_Here}}", className)
+                                             .Replace("{{Entity_Name_Here}}", className)
+                                             .Replace("{{entity_Name_Here}}", GetFirstToLowerStr(className))
+                                             ;
+            Write(Configuration.Application_Directory + className + "s\\Exporting\\", "I" + className + "ListExcelExporter.cs", templateContent);
+        }
+
+        /// <summary>
+        /// 生成ExportingClass
+        /// </summary>
+        /// <param name="className"></param>
+        /// <param name="Primary_Key_Inside_Tag_Here">主键类型</param>
+        public static void SetExportingClass(string className, List<MetaTableInfo> metaTableInfoList)
+        {
+            string appServiceIntercafeClassDirectory = Configuration.RootDirectory + @"\Server\ExportingClass\MainTemplate.txt";
+            var templateContent = Read(appServiceIntercafeClassDirectory);
+            StringBuilder excel_Header = new StringBuilder();
+            StringBuilder excel_Objects = new StringBuilder();
+            foreach (var item in metaTableInfoList)
+            {
+                excel_Header.AppendLine($"\"{item.Annotation }\",");
+                excel_Objects.AppendLine($"_ => _.{item.Name },");
+            }
+            templateContent = templateContent.Replace("{{Namespace_Here}}", Configuration.Namespace_Here)
+                                             .Replace("{{Namespace_Relative_Full_Here}}", className)
+                                             .Replace("{{Entity_Name_Here}}", className)
+                                             .Replace("{{entity_Name_Here}}", GetFirstToLowerStr(className))
+                                             .Replace("{{Permission_Name_Here}}", $"Pages_Administration_{className}")
+                                             .Replace("{{Excel_Header}}", excel_Header.ToString())
+                                             .Replace("{{Excel_Objects}}", excel_Objects.ToString())
+                                             ;
+            Write(Configuration.Application_Directory + className + "s\\Exporting\\", className + "ListExcelExporter.cs", templateContent);
+        }
 
         #region Dtos
 

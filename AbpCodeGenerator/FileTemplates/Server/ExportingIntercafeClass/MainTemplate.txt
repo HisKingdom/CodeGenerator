@@ -1,0 +1,12 @@
+﻿using System.Collections.Generic;
+using {{Namespace_Here}}.Dto;
+using {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}s.Dtos;
+
+namespace {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}s.Exporting
+{
+    public interface I{{Entity_Name_Plural_Here}}ListExcelExporter
+    {
+         FileDto ExportToFile(List<{{Entity_Name_Here}}ListDto> {{entity_Name_Here}}ListDtos);
+
+    }
+}
