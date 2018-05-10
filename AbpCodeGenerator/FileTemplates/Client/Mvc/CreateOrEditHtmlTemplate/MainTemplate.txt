@@ -3,7 +3,7 @@
 @using {{Namespace_Here}}.Web.Areas.{{App_Area_Name_Here}}.Models.{{Entity_Name_Plural_Here}}s
 @model CreateOrEdit{{Entity_Name_Here}}ModalViewModel
 
-@Html.Partial("~/Areas/{{App_Area_Name_Here}}/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("Edit{{Entity_Name_Here}}")) : L("CreateNew{{Entity_Name_Here}}")))
+@Html.Partial("~/Areas/{{App_Area_Name_Here}}/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("Editing{{Entity_Name_Here}}")) : L("CreatingNew{{Entity_Name_Here}}")))
 
 <div class="modal-body">
         <div id="{{Entity_Name_Here}}InformationsTab">

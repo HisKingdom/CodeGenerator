@@ -32,6 +32,7 @@ namespace AbpCodeGenerator.Lib
             Write(Configuration.Web_Mvc_Directory + "Areas\\Admin\\Controllers\\", className + "Controller.cs", templateContent);
         }
 
+
         /// <summary>
         /// 生成CreateOrEditHtmlTemplate
         /// </summary>
@@ -42,23 +43,48 @@ namespace AbpCodeGenerator.Lib
             var templateContent = Read(appServiceIntercafeClassDirectory);
 
             StringBuilder sb = new StringBuilder();
-
-            foreach (var item in metaTableInfoList)
+            for (int i = 0; i < metaTableInfoList.Count; i++)
             {
-                sb.AppendLine("<div class=\"form-group \">");
-                if (item.PropertyType == "string")
+                sb.AppendLine("<div class=\"form-group m-form__group row\">");
+                if (i % 2 == 0)
                 {
-                    sb.AppendLine("  <input class=\"form-control@(Model." + className + "." + item.Name + ".IsNullOrEmpty() ? \"\" : \" edited\")\"");
-                }
-                else
-                {
-                    sb.AppendLine("  <input class=\"form-control\"");
+                    sb.AppendLine($"<label class=\"col-xl-1 col-lg-1 col-form-label\">{metaTableInfoList[i].Annotation}</label>");
+                    sb.AppendLine(" <div class=\"col-xl-5 col-lg-5\">");
+                    if (metaTableInfoList[i].PropertyType == "string")
+                    {
+                        sb.AppendLine("  <input class=\"form-control@(Model." + className + "." + metaTableInfoList[i].Name + ".IsNullOrEmpty() ? \"\" : \" edited\")\"");
+                    }
+                    else
+                    {
+                        sb.AppendLine("  <input class=\"form-control\"");
+                    }
+                    sb.AppendLine("type=\"text\" name=\"" + metaTableInfoList[i].Name + "\"");
+                    sb.AppendLine("value=\"@Model." + className + "." + metaTableInfoList[i].Name + "\" />");
+                    sb.AppendLine("</div>");
+
+                    if (i + 1 < metaTableInfoList.Count)
+                    {
+                        sb.AppendLine($"<label class=\"col-xl-1 col-lg-1 col-form-label\">{metaTableInfoList[i + 1].Annotation}</label>");
+                        sb.AppendLine(" <div class=\"col-xl-5 col-lg-5\">");
+                        if (metaTableInfoList[i + 1].PropertyType == "string")
+                        {
+                            // <input type="datetime"  class="form-control date-picker">
+                            sb.AppendLine("  <input class=\"form-control@(Model." + className + "." + metaTableInfoList[i + 1].Name + ".IsNullOrEmpty() ? \"\" : \" edited\")\"");
+                        }
+                        else
+                        {
+                            sb.AppendLine("  <input class=\"form-control\"");
+                        }
+                        sb.AppendLine("type=\"text\" name=\"" + metaTableInfoList[i + 1].Name + "\"");
+                        sb.AppendLine("value=\"@Model." + className + "." + metaTableInfoList[i + 1].Name + "\" />");
+                        sb.AppendLine("</div>");
+                    }
                 }
 
-                sb.AppendLine("type=\"text\" name=\"" + item.Name + "\"");
-                sb.AppendLine("value=\"@Model." + className + "." + item.Name + "\" />");
+
                 sb.AppendLine("</div> ");
             }
+
             var property_Looped_Template_Here = sb.ToString();
 
             templateContent = templateContent.Replace("{{Namespace_Here}}", Configuration.Namespace_Here)
