@@ -10,7 +10,10 @@ namespace AbpCodeGenerator.Lib
 {
     public class MetaTableInfo
     {
-
+        /// <summary>
+        /// 类的注释
+        /// </summary>
+        public string ClassAnnotation { get; set; }
 
         /// <summary>
         /// 属性名称
@@ -59,6 +62,19 @@ namespace AbpCodeGenerator.Lib
             {
                 if (type.Name.Equals(className))
                 {
+                    var classAnnotation = string.Empty;
+                    try
+                    {
+                        //获取类的注释
+                        XmlElement xmlFromType = DocsByReflection.XMLFromType(type.GetTypeInfo());
+                        classAnnotation = xmlFromType["summary"].InnerText.Trim();
+                    }
+                    catch
+                    {
+
+
+                    }
+
                     foreach (PropertyInfo properties in type.GetProperties())
                     {
                         var metaTableInfo = new MetaTableInfo();
@@ -66,6 +82,8 @@ namespace AbpCodeGenerator.Lib
                         {
                             XmlElement documentation = DocsByReflection.XMLFromMember(type.GetProperty(properties.Name));
                             metaTableInfo.Annotation = documentation["summary"].InnerText.Trim();
+
+                            metaTableInfo.ClassAnnotation = classAnnotation;
                         }
                         catch
                         {

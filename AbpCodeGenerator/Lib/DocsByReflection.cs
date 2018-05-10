@@ -96,6 +96,7 @@ namespace AbpCodeGenerator.Lib
                     }
 
                     matchedElement = xmlElement;
+                    break;
                 }
             }
 

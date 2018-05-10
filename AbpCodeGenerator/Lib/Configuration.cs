@@ -56,6 +56,9 @@ namespace AbpCodeGenerator.Lib
         /// </summary>
         public static string DbName = _configuration["ConnectionStrings:DbName"];
 
-
+        /// <summary>
+        ///AppPermissions.cs（参考abp.zero.core 5.3.0）文件的绝对路径
+        /// </summary>
+        public static string AppPermissions_Path = _configuration["AppPermissions_Path"];
     }
 }

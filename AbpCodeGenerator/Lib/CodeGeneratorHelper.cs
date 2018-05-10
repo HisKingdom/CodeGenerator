@@ -377,6 +377,31 @@ namespace AbpCodeGenerator.Lib
             Write(Configuration.Application_Directory + className + "s\\", className + "ConstsClass.txt", templateContent);
         }
 
+        /// <summary>
+        /// 生成AppPermissions
+        /// </summary>
+        /// <param name="className"></param>
+        public static void SetAppPermissions(string className)
+        {
+            StringBuilder sbAppPermissions_Here = new StringBuilder();
+            sbAppPermissions_Here.AppendLine($"#region {className}");
+            sbAppPermissions_Here.AppendLine($"public const string Pages_Administration_{className} = \"Pages.Administration.{className}\";");
+            sbAppPermissions_Here.AppendLine($"public const string Pages_Administration_{className}_Create = \"Pages.Administration.{className}.Create\";");
+            sbAppPermissions_Here.AppendLine($"public const string Pages_Administration_{className}_Edit = \"Pages.Administration.{className}.Edit\";");
+            sbAppPermissions_Here.AppendLine($"public const string Pages_Administration_{className}_Delete = \"Pages.Administration.{className}.Delete\";");
+            sbAppPermissions_Here.AppendLine(" #endregion");
+            sbAppPermissions_Here.AppendLine("                         ");
+            sbAppPermissions_Here.AppendLine(" //{{AppPermissions_Here}}");
+
+            var appPermissionsTemplateContent = Read(Configuration.AppPermissions_Path);
+            if (!appPermissionsTemplateContent.Contains($"Pages_Administration_{className}"))
+            {
+                appPermissionsTemplateContent = appPermissionsTemplateContent.Replace("//{{AppPermissions_Here}}", sbAppPermissions_Here.ToString());
+                Write(Configuration.AppPermissions_Path, appPermissionsTemplateContent);
+            }
+        }
+
+    
         #endregion
 
         #endregion
@@ -414,6 +439,23 @@ namespace AbpCodeGenerator.Lib
                 Directory.CreateDirectory(filePath);
             }
             using (FileStream fs = new FileStream(filePath + fileName, FileMode.Create))
+            {
+                //获得字节数组
+                byte[] data = Encoding.Default.GetBytes(templateContent);
+                //开始写入
+                fs.Write(data, 0, data.Length);
+            }
+
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="filePath">文件保存路径</param>
+        /// <param name="templateContent">模板内容</param>
+        public static void Write(string filePath, string templateContent)
+        {
+            using (FileStream fs = new FileStream(filePath, FileMode.Create))
             {
                 //获得字节数组
                 byte[] data = Encoding.Default.GetBytes(templateContent);

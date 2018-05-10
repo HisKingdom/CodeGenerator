@@ -18,7 +18,7 @@ namespace AbpCodeGenerator
             //string tableName = "abpusers";
             //var metaTableInfoList = MetaTableInfo.GetMetaTableInfoListForMysql(tableName);
 
-            //程序集
+            //反射程序集的方式生成相应代码 
             string className = "Order";
             var metaTableInfoList = MetaTableInfo.GetMetaTableInfoListForAssembly(className);
 
@@ -34,9 +34,9 @@ namespace AbpCodeGenerator
             CodeGeneratorHelper.SetCreateOrEditInputClass(className, metaTableInfoList);
             CodeGeneratorHelper.SetExportingIntercafeClass(className);
             CodeGeneratorHelper.SetExportingClass(className, metaTableInfoList);
-            CodeGeneratorHelper.SetConstsClass(className);
-
-            //client
+            //CodeGeneratorHelper.SetConstsClass(className);
+            CodeGeneratorHelper.SetAppPermissions(className);
+            ////client
             CodeGeneratorHelper.SetControllerClass(className, propertyType);
             CodeGeneratorHelper.SetCreateOrEditHtmlTemplate(className, metaTableInfoList);
             CodeGeneratorHelper.SetCreateOrEditJs(className);
