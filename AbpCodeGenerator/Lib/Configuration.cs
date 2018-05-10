@@ -56,9 +56,26 @@ namespace AbpCodeGenerator.Lib
         /// </summary>
         public static string DbName = _configuration["ConnectionStrings:DbName"];
 
+
+        /// <summary>
+        /// 应用服务基类
+        /// </summary>
+        public static string Application_AppServiceBase = _configuration["Application_AppServiceBase"];
+
         /// <summary>
         ///AppPermissions.cs（参考abp.zero.core 5.3.0）文件的绝对路径
         /// </summary>
         public static string AppPermissions_Path = _configuration["AppPermissions_Path"];
+
+        /// <summary>
+        ///AppAuthorizationProvider.cs（参考abp.zero.core 5.3.0）文件的绝对路径
+        /// </summary>
+        public static string AppAuthorizationProvider_Path = _configuration["AppAuthorizationProvider_Path"];
+
+        /// <summary>
+        ///本地化源 xml 文档（如：XinYunFen-zh-CN.xml）文件的绝对路径 （参考abp.zero.core 5.3.0）
+        /// </summary>
+        public static string Zh_CN_LocalizationDictionary_Path = _configuration["Zh_CN_LocalizationDictionary_Path"];
+
     }
 }
