@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Linq;
 
 namespace AbpCodeGenerator.Lib
 {
@@ -278,11 +279,28 @@ namespace AbpCodeGenerator.Lib
             var templateContent = Read(appServiceIntercafeClassDirectory);
             StringBuilder excel_Header = new StringBuilder();
             StringBuilder excel_Objects = new StringBuilder();
-            foreach (var item in metaTableInfoList)
+
+            for (int i = 0; i < metaTableInfoList.Count; i++)
             {
-                excel_Header.AppendLine($"\"{item.Annotation }\",");
-                excel_Objects.AppendLine($"_ => _.{item.Name },");
+                if (i == 0)
+                {
+                    excel_Header.AppendLine($"\"{metaTableInfoList[i].Annotation }\",");
+                    excel_Objects.AppendLine($"_ => _.{metaTableInfoList[i].Name },");
+                }
+                else
+                {
+                    var comma = string.Empty;
+                    if (i + 1 < metaTableInfoList.Count)
+                    {
+                        comma = ",";
+                    }
+                    //空格是为了排版 强迫症
+                    excel_Header.AppendLine($"                        \"{metaTableInfoList[i].Annotation }\"" + comma);
+                    excel_Objects.AppendLine($"                        _ => _.{metaTableInfoList[i].Name }" + comma);
+
+                }
             }
+
             templateContent = templateContent.Replace("{{Namespace_Here}}", Configuration.Namespace_Here)
                                              .Replace("{{Namespace_Relative_Full_Here}}", className)
                                              .Replace("{{Entity_Name_Here}}", className)

@@ -35,12 +35,12 @@ namespace {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}s
 
                     AddHeader(
                         sheet,
-                      {{Excel_Header}}
+						{{Excel_Header}}
                         );
 
                     AddObjects(
                         sheet, 2, {{entity_Name_Here}}ListDtos,
-                       {{Excel_Objects}}
+						{{Excel_Objects}}
                         );
 
                     //Formatting cells
